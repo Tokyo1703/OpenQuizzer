@@ -36,3 +36,4 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+Back/node_modules/.package-lock.json
