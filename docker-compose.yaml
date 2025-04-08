@@ -12,18 +12,18 @@ services:
       - 3306
     volumes:
       - "./sql:/docker-entrypoint-initdb.d"
-  back:
-    build:
-      context: Back
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - 3000:3000
-    environment:
-      DB_HOST: database
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: OpenQuizzerDB1703
-      DB_NAME: OpenQuizzerDataBase
-    depends_on:
-      - database
+#  back:
+#    build:
+#      context: Back
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - 3000:3000
+#    environment:
+#      DB_HOST: database
+#      DB_PORT: 3306
+#      DB_USER: root
+#      DB_PASSWORD: OpenQuizzerDB1703
+#      DB_NAME: OpenQuizzerDataBase
+#    depends_on:
+#      - database
