@@ -1,32 +1,35 @@
 import express, { json } from 'express'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import UsuarioRouter from './routes/usuario.js'
+import cookieParser from 'cookie-parser'
+import jwt from 'jsonwebtoken'
 
-const app = express();
-app.use(json());
-app.use(cors());
+dotenv.config()
+const app = express()
+app.use(json())
+app.use(cookieParser())
+app.use(cors())
 
 app.use((req,res,next)=>{
-  const token = req.cookies.acces_token;
-  let data = null;
-  req.session = {user: null};
+  
 
   try{
-    data = jwt.verify(token, process.env.JWT_SECRET);
-    req.session.user = data;
-  }
-  catch(error){
-    req.session.user = null;
-    res.status(401).send("Error de autenticación");
-  }
+    const token = req.cookies.access_token
+    const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
+    req.usuario = infoUsuario
 
-  next();
-});
+  }
+  catch(error){   
+    req.usuario = null
+  }
+  next()
+})
 
 app.disable('x-powered-by')
 
 app.use('/usuarios', UsuarioRouter);
-app.use('/login', UsuarioRouter);
+
 
 const PORT = process.env.PORT || 3000;
 

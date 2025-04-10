@@ -1,10 +1,23 @@
-import connection from '../connection_db/connection.js';
-import bcrypt, { hash } from 'bcrypt';
+import connection from '../connection_db/connection.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export class UsuarioModel {
 
-    static async getByNombreUsuario({nombreUsuario}) {
-        const Usuario = await connection.query('Select * from usuario where nombreUsuario = ?',[nombreUsuario])
+    static async GetByNombreUsuario(nombreUsuario) {
+        try{
+            const [rows] = await connection.query('Select * from usuario where nombreUsuario = ?',[nombreUsuario])
+
+            if (rows.length === 0) return null
+
+            const usuario = rows[0]
+
+            return usuario
+
+        }
+        catch(error){
+            throw new Error('Error al obtener el usuario')
+        }
     }
 
     static async Create({inputData}){
@@ -15,12 +28,12 @@ export class UsuarioModel {
             correo,
             contrasena,
             rol,
-        } = inputData;
+        } = inputData
 
         //Validaciones
-        const [query] = await connection.query('Select nombreUsuario from usuario where nombreUsuario = ?',[nombreUsuario]);
+        const [query] = await connection.query('Select nombreUsuario from usuario where nombreUsuario = ?',[nombreUsuario])
         
-        if(query.length > 0){
+        if(query.length != 0){
             throw new Error('Este nombre de usuario ya existe')
         }
 
@@ -29,7 +42,7 @@ export class UsuarioModel {
         }
 
         //Hash de la contraseña
-        contrasenahashed = await bcrypt.hash(contrasena, 10);
+        const contrasenahashed = await bcrypt.hash(contrasena, 10)
 
 
         try {
@@ -37,7 +50,7 @@ export class UsuarioModel {
                 `INSERT INTO usuario (nombreUsuario, nombre, apellidos, correo, contrasena, rol)
                  VALUES (?, ?, ?, ?, ?, ?)`,
                 [nombreUsuario, nombre, apellidos, correo, contrasenahashed, rol]
-            );
+            )
 
             return {
                 nombreUsuario,
@@ -46,7 +59,7 @@ export class UsuarioModel {
                 correo,
                 contrasena,
                 rol
-            };
+            }
         }
         catch(error){
             throw new Error('Error creando usuario')
@@ -54,24 +67,24 @@ export class UsuarioModel {
     }
 
     static async Login({inputData}){
-        const {inputUsuario, inputContrasena} = inputData;
+        const {nombreUsuario: inputUsuario, contrasena: inputContrasena} = inputData
+        
         
         //Validaciones
-        const [query] = await connection.query('Select nombreUsuario, contrasena from usuario where nombreUsuario = ?',[inputUsuario]);
-
-        if(query.length === 0){
-            throw new Error('Este usuario no existe')
+        const usuario = await UsuarioModel.GetByNombreUsuario(inputUsuario)
+        if(!usuario){ 
+            throw new Error('No existe este nombre de usuario')
         }
-
-        const {usuario, contrasena} = query[0];
         
-        const valido = await bcrypt.compare(inputContrasena, contrasena)
-        
+        const valido = await bcrypt.compare(inputContrasena, usuario.contrasena)
         if(!valido){
             throw new Error('Contraseña incorrecta')
         }
         
+        //Creación del token
+        const token = jwt.sign({nombreUsuario: usuario.nombreUsuario, rol: usuario.rol}, process.env.JWT_SECRET || 'secret', {expiresIn: '1h'})
+        const {contrasena, ...usuarioPublico} = usuario
+        return {usuarioPublico, token}
 
     }
-
 }
