@@ -9,6 +9,7 @@ const config = {
     password: process.env.DB_PASSWORD || 'OpenQuizzerDB1703',
     database: process.env.DB_NAME || 'OpenQuizzerDataBase'
 }
+
 const connection = await mysql.createConnection(config);
 
 export default connection;

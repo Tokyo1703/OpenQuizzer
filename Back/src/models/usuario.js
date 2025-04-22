@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 export class UsuarioModel {
+    
 
     static async GetByNombreUsuario(nombreUsuario) {
         try{
@@ -15,8 +16,10 @@ export class UsuarioModel {
             return usuario
 
         }
-        catch(error){
-            throw new Error('Error al obtener el usuario')
+        catch(e){
+            const error = new Error('Error de acceso a la base de datos')
+            error.code = 500
+            throw error
         }
     }
 
@@ -31,14 +34,37 @@ export class UsuarioModel {
         } = inputData
 
         //Validaciones
-        const [query] = await connection.query('Select nombreUsuario from usuario where nombreUsuario = ?',[nombreUsuario])
+        const usuario = await UsuarioModel.GetByNombreUsuario(nombreUsuario)
+
         
-        if(query.length != 0){
-            throw new Error('Este nombre de usuario ya existe')
+        if(usuario){
+            const error = new Error('Ya existe este nombre de usuario')
+            error.code = 409
+            throw error
         }
 
-        if(contrasena.length < 8){
-            throw new Error('La contraseña debe tener al menos 8 caracteres')
+
+        try {
+            const [query] = await connection.query('Select * from usuario where correo = ?',[correo])
+            if(query.length > 0){
+                const error = new Error('Ya existe un usuario con este correo')
+                error.code = 409
+                throw error
+            }
+        }
+        catch (e) {
+            const error = new Error('Error de acceso a la base de datos')
+            error.code = 500
+            throw error
+        }
+        
+        
+
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        if(!(regex.test(contrasena))){
+            const error = new Error('La contraseña debe tener al menos 8 caracteres, una letra y un número')
+            error.code = 400
+            throw error
         }
 
         //Hash de la contraseña
@@ -52,17 +78,11 @@ export class UsuarioModel {
                 [nombreUsuario, nombre, apellidos, correo, contrasenahashed, rol]
             )
 
-            return {
-                nombreUsuario,
-                nombre,
-                apellidos,
-                correo,
-                contrasena,
-                rol
-            }
         }
-        catch(error){
-            throw new Error('Error creando usuario')
+        catch(e){
+            const error = new Error('Error de acceso a la base de datos')
+            error.code = 500
+            throw error
         }
     }
 
@@ -73,18 +93,23 @@ export class UsuarioModel {
         //Validaciones
         const usuario = await UsuarioModel.GetByNombreUsuario(inputUsuario)
         if(!usuario){ 
-            throw new Error('No existe este nombre de usuario')
+            const error = new Error('No existe este nombre de usuario')
+            error.code = 404
+            throw error
         }
         
         const valido = await bcrypt.compare(inputContrasena, usuario.contrasena)
         if(!valido){
-            throw new Error('Contraseña incorrecta')
+            const error = new Error('Contraseña incorrecta')
+            error.code = 401
+            throw error
         }
         
         //Creación del token
-        const token = jwt.sign({nombreUsuario: usuario.nombreUsuario, rol: usuario.rol}, process.env.JWT_SECRET || 'secret', {expiresIn: '1h'})
         const {contrasena, ...usuarioPublico} = usuario
-        return {usuarioPublico, token}
+        const token = jwt.sign(usuarioPublico, process.env.JWT_SECRET || 'secret', {expiresIn: '1h'})
+        return {token, usuario: usuarioPublico}
+        
 
     }
 }

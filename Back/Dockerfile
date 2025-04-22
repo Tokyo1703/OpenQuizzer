@@ -1,5 +1,5 @@
 # Imagen de node.js para el backend
-FROM node:22
+FROM node:22.14.0
 
 # Creamos el directorio de trabajo dentro del contenedor
 WORKDIR /Back

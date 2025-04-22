@@ -1,0 +1,13 @@
+.bg-lila {
+  background-color: #b56fca;
+}
+
+.green-button {
+  background-color: #4fc984;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
