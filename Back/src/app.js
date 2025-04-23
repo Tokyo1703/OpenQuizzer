@@ -9,7 +9,7 @@ const app = express()
 app.use(json())
 app.use(cookieParser())
 app.use(cors({
-  origin: 'http://localhost:4200', 
+  origin: ['http://localhost:4200', 'http://angular_container:4200'], 
   credentials: true                
 }))
 app.disable('x-powered-by')

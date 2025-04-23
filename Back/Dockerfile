@@ -16,5 +16,11 @@ COPY . .
 # Expose the port the backend will run on
 EXPOSE 3000
 
+RUN apt-get update && apt-get install -y wget && \
+    wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz && \
+    tar -xvf dockerize-linux-amd64-v0.6.1.tar.gz && \
+    mv dockerize /usr/local/bin/
+
 # Start the backend server
-CMD ["npm", "run", "dev"]
+
+CMD ["dockerize", "-wait", "tcp://database:3306", "-timeout", "30s", "npm", "run", "dev"]
