@@ -2,6 +2,7 @@ import express, { json } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import UsuarioRouter from './routes/usuario.js'
+import CuestionarioRouter from './routes/cuestionario.js'
 import cookieParser from 'cookie-parser'
 
 dotenv.config()
@@ -15,7 +16,7 @@ app.use(cors({
 app.disable('x-powered-by')
 
 app.use('/usuarios', UsuarioRouter);
-
+app.use('/cuestionarios', CuestionarioRouter);
 
 const PORT = process.env.PORT || 3000;
 

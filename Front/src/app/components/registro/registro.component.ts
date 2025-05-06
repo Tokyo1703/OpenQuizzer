@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import { Usuario } from '../../interfaces/usuario';
-import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -23,15 +24,21 @@ export class RegistroComponent {
     rol: ""
   };
 
-  constructor(private usuarioService: UsuarioService, private router: RouterModule){}
+  constructor(private usuarioService: UsuarioService, private toastr: ToastrService, private router: Router){}
 
   Registrar() {
+    if(this.usuario.nombreUsuario == "" || this.usuario.nombre == "" || this.usuario.apellidos == "" || this.usuario.correo == "" || this.usuario.contrasena == "" || this.usuario.rol == "") {
+      this.toastr.error('Error', 'Por favor completa todos los campos', {timeOut: 8000, closeButton: true});
+      return;
+    }
+    
     this.usuarioService.registrarUsuario(this.usuario).subscribe({
       next: (res) => {
-        console.log('Usuario registrado:', res);
+        this.toastr.success('Registro exitoso', 'Ya puedes iniciar sesión' , {timeOut: 8000, closeButton: true});
+        this.router.navigate(['/login']);
       },
-      error: (e: HttpErrorResponse) => {
-        console.error('Error al registrar el usuario:', e.message);
+      error: (e) => {
+        this.toastr.error('Error', e.message, {timeOut: 8000, closeButton: true});
       }}
     );
   }

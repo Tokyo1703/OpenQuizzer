@@ -17,8 +17,8 @@ export class UsuarioService {
     return this.http.post(`${this.apiUrl}/usuarios/crear` , usuario, {withCredentials: true}).pipe(
       catchError(error => {
         
-        const errorMsg = error.error?.Error || 'Error desconocido al registrar';
-        return throwError(() => new Error(errorMsg))
+        const mensajeError= error.error?.Error || 'Error desconocido al registrar';
+        return throwError(() => new Error(mensajeError))
       })
     )
   }
@@ -37,6 +37,16 @@ export class UsuarioService {
     return this.http.get(`${this.apiUrl}/usuarios/perfil`, {withCredentials: true}).pipe(
       catchError(error => {
         const mensajeError = error.error?.Error || 'Error desconocido de autenticación';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
+  cerrarSesion(): Observable<any> {
+    localStorage.removeItem('perfil');
+    return this.http.post(`${this.apiUrl}/usuarios/logout`, {}, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError = error.error?.Error || 'Error desconocido al cerrar sesión';
         return throwError(() => new Error(mensajeError))
       })
     )

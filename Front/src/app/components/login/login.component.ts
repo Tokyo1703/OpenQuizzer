@@ -19,11 +19,16 @@ export class LoginComponent {
   constructor(private usuarioService: UsuarioService, private toastr: ToastrService, private router: Router){}
 
   Login() {
+    if(this.nombreUsuario == "" || this.contrasena == "") {
+      this.toastr.error('Error', 'Por favor completa todos los campos', {timeOut: 8000, closeButton: true});
+      return;
+    }
+
     this.usuarioService.login(this.nombreUsuario,this.contrasena).subscribe({
       next: (res) => {
         
         this.toastr.success('Login exitoso', 'Bienvenido/a ' + res.usuario.nombre, {timeOut: 8000, closeButton: true})
-
+        localStorage.setItem('perfil', JSON.stringify(res.usuario));
         //Redirección en base al rol
         this.rol = res.usuario.rol
         if(this.rol=="Creador"){
@@ -34,7 +39,7 @@ export class LoginComponent {
         }
       },
       error: (e) => {
-        this.toastr.error('Error', e.message, {timeOut: 10000, closeButton: true})
+        this.toastr.error('Error', e.message, {timeOut: 8000, closeButton: true})
       }}
     );
   }

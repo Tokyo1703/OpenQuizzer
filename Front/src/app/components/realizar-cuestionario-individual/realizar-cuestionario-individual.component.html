@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-center align-items-center pt-4 mb-4">
+    @if(paso==0){
+        
+        <div class="p-4 bg-green rounded shadow d-flex justify-content-center align-items-center" 
+        style="max-width: 1200px; width: 90%; min-height: 600px;">
+            
+            <h1>{{cuestionario.nombre}}</h1>
+            
+        </div>
+    }
+    @if(paso!=0){
+        <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-lg-between"
+        style="max-width: 1200px; width: 90%; min-height: 600px;">
+            
+        <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+            <h2>{{preguntas[paso-1].contenido}}</h2>
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
+            @for(respuesta of preguntas[paso-1].respuestas; track respuesta; let index=$index){
+                <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color:crimson"> 
+                    <h3>{{respuesta.contenido}}</h3>
+                </div>
+            }
+        </div>
+            
+        </div>
+        
+    }
+</div>
+

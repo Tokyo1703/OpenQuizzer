@@ -1,0 +1,10 @@
+<div class="d-flex flex-column align-items-center pt-4">
+    @for(cuestionario of listaCuestionarios; track cuestionario; let index = $index){
+        <div class="p-4 m-2 rounded shadow d-flex flex-column align-items-start justify-content-lg-between" 
+        [style.background-color]="coloresCuestionarios[index]" style="max-width: 1200px; width: 90%; min-height: 100px;">
+            <h3>{{cuestionario.nombre}}</h3>
+            <p>{{cuestionario.descripcion}}</p>
+            <button class= "green-button" (click)="RealizarCuestionario(cuestionario.idCuestionario)">Probar Cuestionario</button>
+        </div>
+    }
+</div>

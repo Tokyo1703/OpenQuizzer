@@ -1,13 +1,5 @@
-<nav class="navbar bg-lila ">
-  <div class="container-fluid d-flex">
-    <a class="navbar-brand align-items-center me-auto" routerLink="/home">
-      <img src="img/Logo.png" alt="Logo" width="40" class="d-inline-block" >
-      <span class="ms-4 text-white fw-bold " >OpenQuizzer</span>
-    </a>
-  </div>
-</nav>
 
-<div class="d-flex justify-content-center align-items-center mt-4 mb-4">
+<div class="d-flex justify-content-center align-items-center pt-4 mb-4">
 
     <div class="p-4 bg-lila rounded shadow d-flex flex-column align-items-center">
       
@@ -15,7 +7,7 @@
       <h3>Registro</h3>
       
         <div class="row text-center">
-          <div class="col-md-6 d-flex flex-column align-items-start  ">
+          <div class="col-md-6">
             <div class="mt-1 mb-2">
               <label for="NombreUsuario" class="form-label">Nombre de usuario</label>
               <input type="text" [(ngModel)]="usuario.nombreUsuario"  class="form-control" id="NombreUsuario">
@@ -29,18 +21,18 @@
               <input type="text" [(ngModel)]="usuario.apellidos"  class="form-control" id="Apellidos">
             </div>
           </div>
-          <div class="col-md-6 d-flex flex-column align-items-start  ">
+          <div class="col-md-6">
             <div class=" mt-1 mb-2">
               <label for="Correo" class="form-label">Correo electrónico</label>
               <input type="email" [(ngModel)]="usuario.correo"  class="form-control" id="Correo" placeholder="ejemplo@mail.com">
             </div>
             <div class="mb-2">
               <label for="Contrasena" class="form-label">Contraseña</label>
-              <input type="password" [(ngModel)]="usuario.contrasena" class="form-control" id="Contrasena">
+              <input type="password" [(ngModel)]="usuario.contrasena"  class="form-control" id="Contrasena">
             </div>
             <div class="mb-2">
               <label for="Rol" class="form-label">Rol de Usuario</label>
-              <select class="form-select" id="Rol" [(ngModel)]="usuario.rol" aria-label="Seleccionar Rol de Usuario">
+              <select class="form-select" id="Rol" [(ngModel)]="usuario.rol"  aria-label="Seleccionar Rol de Usuario">
                 <option value="Participante">Participante</option>
                 <option value="Creador">Creador</option>
               </select>

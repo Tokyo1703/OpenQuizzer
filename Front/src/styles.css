@@ -3,6 +3,16 @@
   background-color: #b56fca;
   color: white;
 }
+
+.bg-green{
+  background-color: #4fc984;
+  color: white;
+}
+
+.bg-light-green{
+  background-color: #cbfbe0;
+}
+
 .green-button {
   background-color: #4fc984;
   color: white;
@@ -11,4 +21,18 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.lila-button {
+  background-color: #b56fca;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.nav-link {
+  cursor: pointer;
 }

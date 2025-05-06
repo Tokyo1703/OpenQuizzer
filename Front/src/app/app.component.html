@@ -1,2 +1,42 @@
+<nav class="navbar bg-lila fixed-top ">
+    <div class="container-fluid d-flex justify-content-between">
+        <a class="navbar-brand d-flex align-items-center m-0" href="#">
+            <img src="img/Logo.png" alt="Logo" width="40" class="d-inline-block" >
+            <span class="ms-4 text-white fw-bold d-none d-none d-sm-block" >OpenQuizzer</span>
+        </a>
 
-<router-outlet />
+        @if(!MostrarRutaSubrutas("/realizarCuestionarioIndividual")){
+            <div class="d-flex align-items-center m-0" style="max-width: 280px;">
+                <input type="text" [(ngModel)]="codigoCuestionario"  class="form-control" placeholder="Código de cuestionario" >
+                <button class="green-button ms-2 px-3 py-1" (click)="UnirseCuestionario()">Unirse</button>
+            </div>
+        }
+        <div class="d-flex align-items-center">
+
+        @if(Mostrar("/") || Mostrar("/login")){
+            <button class="green-button me-2 d-flex align-items-center px-3 py-2" routerLink="/registro">
+                <i class="bi bi-person-circle fs-6 me-2"></i>
+                Registro
+            </button>
+        }
+        @if(Mostrar("/")|| Mostrar("/registro")){
+            <button class= "green-button d-flex align-items-center px-3 py-1" routerLink="/login">
+                <i class="bi bi-key fs-5 me-2"></i>
+                LogIn
+            </button>
+        }
+        @if(MostrarRutaSubrutas("/homeCreador")){
+            <app-menu-creador></app-menu-creador>    
+        }
+        </div>
+    </div>
+</nav>
+
+<div class="bg-light-green min-vh-100 w-100" style="margin-top: 65px;">
+    <router-outlet></router-outlet>
+    @if(Mostrar("/")){
+        
+        <app-lista-cuestionarios></app-lista-cuestionarios>
+        
+    }
+</div>

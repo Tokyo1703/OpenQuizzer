@@ -1,1 +1,45 @@
-<p>home-creador works!</p>
+   
+    @if(Mostrar("/homeCreador")){
+    <button class="btn  bg-green d-flex flex-column align-items-center justify-content-center position-fixed top-0 start-0 vh-100"
+    style="border-radius: 0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+        <i class="bi bi-list fs-2"></i>
+    </button>
+    <div class="offcanvas offcanvas-start bg-green" tabindex="-1" id="menuLateral" >
+        <div class="offcanvas-header d-lg-none">
+          <h5 class="offcanvas-title">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#menuLateral" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-3 me-3">
+            
+          <ul class="navbar-nav d-flex flex-column align-items-center ">
+            
+            <li class="nav-item "> 
+                <a class="nav-link active d-flex align-items-center" [routerLink]="['crearCuestionario']">
+                    <i class="bi bi-plus-circle fs-3"></i>
+                    <span class="ms-2">Cuestionario</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link active" [routerLink]="['/homeCreador/MisCuestionarios']">Mis cuestionarios</a>
+            </li>
+            
+            
+          </ul>
+          
+        </div>
+    </div>
+    }
+        
+    <router-outlet></router-outlet>
+    @if(Mostrar("/homeCreador")){
+        <app-lista-cuestionarios></app-lista-cuestionarios>
+        
+    }
+        
+
+
+
+
+
+

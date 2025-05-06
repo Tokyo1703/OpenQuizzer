@@ -9,12 +9,12 @@ import { Location } from '@angular/common';
 export const autenticacionGuard: CanActivateFn = (route, state) => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
-  const location = inject(Location);
   
   return usuarioService.getPerfil().pipe(
     map(() => true),
     catchError(() => {
       router.navigate(['/login']);
+      localStorage.removeItem('perfil');
       return of(false);
     })
   )
@@ -24,7 +24,6 @@ export const autenticacionGuard: CanActivateFn = (route, state) => {
 export const autenticacionGuardCreador: CanActivateFn = (route, state) => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
-  const location = inject(Location);
   
   return usuarioService.getPerfil().pipe(
     map((res) => {
@@ -36,6 +35,7 @@ export const autenticacionGuardCreador: CanActivateFn = (route, state) => {
     }),
     catchError(() => {
       router.navigate(['/login']);
+      localStorage.removeItem('perfil');
       return of(false);
     })
   )
@@ -57,6 +57,7 @@ export const autenticacionGuardParticipante: CanActivateFn = (route, state) => {
     }),
     catchError(() => {
       router.navigate(['/login']);
+      localStorage.removeItem('perfil');
       return of(false);
     })
   )

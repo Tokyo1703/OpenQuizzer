@@ -106,9 +106,9 @@ export class UsuarioModel {
         }
         
         //Creación del token
-        const {contrasena, ...usuarioPublico} = usuario
-        const token = jwt.sign(usuarioPublico, process.env.JWT_SECRET || 'secret', {expiresIn: '1h'})
-        return {token, usuario: usuarioPublico}
+        const {contrasena, ...perfil} = usuario
+        const token = jwt.sign(perfil, process.env.JWT_SECRET || 'secret', {expiresIn: '1h'})
+        return {token, usuario: perfil}
         
 
     }

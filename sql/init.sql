@@ -28,7 +28,7 @@ create table if not exists cuestionario(
     nombre varchar(128) not null,
     descripcion varchar(255), 
     privacidad varchar(255) not null,
-    constraint ck_privacidad CHECK (privacidad in ('Público','Privado')),
+    constraint ck_privacidad CHECK (privacidad in ('Publico','Privado')),
     constraint fk_UsuarioCuestionario foreign key (nombreUsuario) references usuario(nombreUsuario)
 );
 
@@ -41,7 +41,7 @@ create table if not exists pregunta(
     puntuacion int not null,
     puntosSegundo int not null,
     
-    constraint ck_tipo CHECK (tipo in ('VerdaderoFalso','RespuestaAbierta','OpcionMúltiple','OpcionÚnica')),
+    constraint ck_tipo CHECK (tipo in ('VerdaderoFalso','RespuestaAbierta','OpcionMultiple','OpcionUnica')),
     constraint fk_PreguntaCuestionario foreign key (idCuestionario) references cuestionario(idCuestionario)
 );
 

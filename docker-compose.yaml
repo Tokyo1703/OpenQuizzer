@@ -11,7 +11,8 @@ services:
     expose:
       - 3306
     volumes:
-      - "./sql:/docker-entrypoint-initdb.d"
+      - ./sql:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
   back:
     build:
       context: Back
@@ -27,6 +28,10 @@ services:
       DB_NAME: OpenQuizzerDataBase
     depends_on:
       - database
+    develop:
+      watch:
+        - action: rebuild
+          path: ./Back/.
   front:
     build:
       context: Front
@@ -35,8 +40,10 @@ services:
     restart: always
     ports:
       - 4200:4200
-    depends_on:
-      - back
-    volumes:
-      - ./Front:/app
-  
+      
+    develop:
+      watch:
+        - action: rebuild
+          path: ./Front/.
+volumes:
+  mysql_data:
