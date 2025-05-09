@@ -1,31 +1,106 @@
 <div class="d-flex justify-content-center align-items-center pt-4 mb-4">
-    @if(paso==0){
+    @if(paso=="Inicio"){
         
-        <div class="p-4 bg-green rounded shadow d-flex justify-content-center align-items-center" 
+        <div class="p-4 bg-green rounded shadow d-flex justify-content-lg-center align-items-center" 
         style="max-width: 1200px; width: 90%; min-height: 600px;">
             
-            <h1>{{cuestionario.nombre}}</h1>
+            <h1 class="text-center">{{cuestionario.nombre}}</h1>
             
         </div>
     }
-    @if(paso!=0){
-        <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-lg-between"
+    @if(paso=="Pregunta"){
+        <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-evenly justify-content-lg-evenly position-relative"
         style="max-width: 1200px; width: 90%; min-height: 600px;">
-            
-        <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
-            <h2>{{preguntas[paso-1].contenido}}</h2>
-        </div>
-
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
-            @for(respuesta of preguntas[paso-1].respuestas; track respuesta; let index=$index){
-                <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color:crimson"> 
-                    <h3>{{respuesta.contenido}}</h3>
+            <div class="bg-lila p-2 m-1" style="position: absolute; top: 10px; right: 20px; border-radius: 20px;">
+                {{ tiempoRestante }}s
+            </div>
+            <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+                <h2>{{preguntas[numeroPregunta].contenido}}</h2>
+            </div>
+            @if(preguntas[numeroPregunta].tipo=="RespuestaAbierta"){
+                <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color:royalblue "> 
+                    <label for="Respuesta Abierta" class="form-label">Introduce tu respuesta</label>
+                    <input type="text" id="Respuesta Abierta" class="form-control" [(ngModel)]="nuevaPreguntaContestada.respuesta"  >
+                </div>
+                <button class="lila-button" (click)="finPregunta()">Enviar respuesta</button>
+            }
+            @else {
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+                    @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                        <button  class="green-button m-2" style="background-color:royalblue"
+                        (click)="guardarRespuesta(respuesta.contenido)">
+                            <h3>{{respuesta.contenido}}</h3>
+                        </button>
+                        
+                    }
                 </div>
             }
-        </div>
             
         </div>
         
+    }
+    @if(paso=="Resultado"){
+        <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-evenly justify-content-lg-evenly position-relative"
+        style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <div class="bg-lila p-2 m-1" style="position: absolute; top: 10px; right: 20px; border-radius: 10px;">
+            Siguiente pregunta en {{ tiempoRestante }}s
+        </div>
+            <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+                <h2>{{preguntas[numeroPregunta].contenido}}</h2>
+            </div>
+
+            @if(preguntasContestadas[numeroPregunta].puntuacion>0){
+                <h3>Acertaste</h3>
+            }
+            @else {
+                <h3>Fallaste</h3>
+            }
+
+            @if(preguntas[numeroPregunta].tipo=="RespuestaAbierta"){
+                
+                <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color:royalblue "> 
+                    <h4>Respuesta correcta</h4>
+                    <h5>{{preguntas[numeroPregunta].respuestas[0].contenido}}</h5>
+                </div>
+            }
+            @else {
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between">
+                    @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                        @if(respuesta.correcta=="Correcta"){
+                            <div  class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue">
+                                <h4>Respuesta correcta</h4>
+                                <h5>{{respuesta.contenido}}</h5>
+                            </div>
+                        }
+                        @else {
+                            <div  class="p-4 m-2 rounded shadow text-center" style="background-color:firebrick">
+                                <h4>Respuesta incorrecta</h4>
+                                <h5>{{respuesta.contenido}}</h5>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+            <button class="lila-button" (click)="finResultado()">Siguiente pregunta</button>
+            
+        </div>
+    }
+    @if(paso=="Finalizado"){
+        <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-evenly justify-content-lg-evenly"
+        style="max-width: 1200px; width: 90%; min-height: 600px;">
+            <h1>Fin del cuestionario</h1>
+            <h2 class=" text-center"> Has obtenido {{this.resultadoIndividual.puntuacionFinal}} puntos en total</h2>
+           
+            @if(registrado){
+                <div class="d-flex flex-wrap align-items-center justify-content-evenly justify-content-lg-evenly" style="width: 90%;">
+                    <button class= "lila-button m-2" (click)="RegresarHome(false)">Salir sin guardar</button>
+                    <button class= "lila-button m-2" (click)="RegresarHome(true)">Salir y guardar resultados</button>
+                </div>
+            }
+            @else {
+                <button class= "lila-button" (click)="RegresarHome(false)">Salir</button>
+            }
+        </div>
     }
 </div>
 

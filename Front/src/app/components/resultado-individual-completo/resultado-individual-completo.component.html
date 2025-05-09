@@ -1,0 +1,73 @@
+<div class="d-flex justify-content-center align-items-center pt-4 mb-4" style="height: 100%;">
+    <div class="d-flex flex-column align-items-center justify-content-center justify-content-lg-between" style="max-width: 1200px; width: 90%;">
+        <div class="p-4 m-2 bg-green rounded shadow d-flex flex-wrap justify-content-center align-items-center justify-content-lg-evenly text-center"
+        style="max-width: 1200px; width: 90%;">
+            <h5>{{resultadoIndividual.fecha}}</h5>
+            <h2>{{cuestionario.nombre}}</h2>
+            <h5>{{resultadoIndividual.hora}}</h5>
+        </div>
+        @for(preguntaContestada of preguntasContestadas; track preguntaContestada; let index=$index){
+            @if(preguntaContestada.puntuacion>0){
+                <div class="p-4 m-2 bg-green rounded shadow d-flex flex-column align-items-center justify-content-evenly justify-content-lg-evenly"
+                style="max-width: 1200px; width: 90%; background-color:royalblue">
+                    <div class="p-4 rounded bg-lila m-2 row shadow text-center" style="max-width:1000px;  width: 90%;">
+                        <h3>{{preguntaContestada.pregunta.contenido}}</h3>
+                    </div>
+                    <h4 class="m-2">Correcta</h4>
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+                        <div class="p-4 m-2 rounded shadow text-center bg-green"> 
+                            <h4>Tu respuesta</h4>
+                            <p>{{preguntaContestada.respuesta}}</p>
+                        </div>
+                        @if(preguntaContestada.pregunta.tipo=="RespuestaAbierta"){
+                            <div class="p-4 m-2 rounded shadow text-center bg-green">
+                                <h4>Respuesta correcta</h4>
+                                <p>{{preguntaContestada.pregunta.respuestas[0].contenido}}</p>
+                            </div>
+                        }@else {
+                            @for(respuesta of preguntaContestada.pregunta.respuestas; track respuesta; let index=$index){
+                                @if(respuesta.correcta=="Correcta"){
+                                    <div class="p-4 m-2 rounded shadow text-center bg-green">
+                                        <h4>Respuesta correcta</h4>
+                                        <p>{{respuesta.contenido}}</p>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            }@else {
+                <div class="p-4 m-2 bg-green rounded shadow d-flex flex-column align-items-center justify-content-evenly justify-content-lg-evenly position-relative"
+                style="max-width: 1200px; width: 90%; background-color:firebrick">
+                    <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+                        <h3>{{preguntaContestada.pregunta.contenido}}</h3>
+                    </div>
+                    <h4 class="m-2">Incorrecta</h4>
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+                        <div class="p-4 m-2 rounded shadow text-center bg-green"> 
+                            <h4>Tu respuesta</h4>
+                            <p>{{preguntaContestada.respuesta}}</p>
+                        </div>
+                        @if(preguntaContestada.pregunta.tipo=="RespuestaAbierta"){
+                            <div class="p-4 m-2 rounded shadow text-center bg-green">
+                                <h4>Respuesta correcta</h4>
+                                <p>{{preguntaContestada.pregunta.respuestas[0].contenido}}</p>
+                            </div>
+                        }@else {
+                            @for(respuesta of preguntaContestada.pregunta.respuestas; track respuesta; let index=$index){
+                                @if(respuesta.correcta=="Correcta"){
+                                    <div class="p-4 m-2 rounded shadow text-center bg-green">
+                                        <h4>Respuesta correcta</h4>
+                                        <p>{{respuesta.contenido}}</p>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>   
+                </div>
+            }
+        }
+        <button class="lila-button m-2" [routerLink]="['/homeCreador/resultadosIndividuales']">Volver</button>
+    </div>
+
+</div>

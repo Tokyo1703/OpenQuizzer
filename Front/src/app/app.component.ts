@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { UsuarioService } from './services/usuario/usuario.service';
 import { Router } from '@angular/router';
@@ -15,10 +15,26 @@ import { ListaCuestionariosComponent } from "./components/lista-cuestionarios/li
   styleUrl: './app.component.css'
 })
 
-export class AppComponent{
+export class AppComponent implements OnInit {
   codigoCuestionario: string="";
 
-  constructor(private router:Router) {}
+  constructor(private router:Router, private usuarioService: UsuarioService) {}
+
+  ngOnInit(): void {
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        if (res.perfil.rol == 'Creador') {
+          this.router.navigate(['/homeCreador']);
+        } else if (res.perfil.rol == 'Participante') {
+          this.router.navigate(['/homeParticipante']);
+        }
+      },
+      error: () => {
+        
+        this.router.navigate(['/']);
+      }
+    });
+  }
 
   Mostrar(url: string): boolean {
     return (this.router.url === url);

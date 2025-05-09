@@ -6,22 +6,36 @@ import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
 
-export const autenticacionGuard: CanActivateFn = (route, state) => {
+export const autenticacionGuardSinSesion: CanActivateFn = () => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
   
   return usuarioService.getPerfil().pipe(
-    map(() => true),
+    map((perfil) => {
+      if (perfil.rol === 'Creador') {
+        return router.createUrlTree(['/homeCreador']);
+      } else if (perfil.rol === 'Participante') {
+        return router.createUrlTree(['/homeParticipante']);
+      }
+      return false; 
+    }),
     catchError(() => {
-      router.navigate(['/login']);
-      localStorage.removeItem('perfil');
-      return of(false);
+      
+      return of(true)
     })
-  )
+  );
+}
   
-};
 
-export const autenticacionGuardCreador: CanActivateFn = (route, state) => {
+
+
+  
+
+
+
+
+
+export const autenticacionGuardCreador: CanActivateFn = () => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
   
@@ -42,7 +56,7 @@ export const autenticacionGuardCreador: CanActivateFn = (route, state) => {
 
 }
 
-export const autenticacionGuardParticipante: CanActivateFn = (route, state) => {
+export const autenticacionGuardParticipante: CanActivateFn = () => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
   const location = inject(Location);

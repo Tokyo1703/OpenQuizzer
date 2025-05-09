@@ -11,3 +11,17 @@ export interface Pregunta {
     puntosSegundo: number
     respuestas: Respuesta[]
 }
+export interface PreguntaRecibidadBackend extends Pregunta {
+    idPregunta: number;
+  }
+
+export interface PreguntaContestada{
+    idPregunta: number,
+    respuesta: string,
+    tiempo: number,
+    puntuacion: number
+}
+
+export interface PreguntaContestadaCompleta extends PreguntaContestada{
+    pregunta: PreguntaRecibidadBackend
+}

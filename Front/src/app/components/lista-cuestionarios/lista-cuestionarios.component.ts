@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cuestionario } from '../../interfaces/cuestionario';
 import { CuestionarioService } from '../../services/cuestionario/cuestionario.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,12 +12,13 @@ import { RouterModule, Router } from '@angular/router';
   styleUrl: './lista-cuestionarios.component.css'
 })
 
-export class ListaCuestionariosComponent {
+export class ListaCuestionariosComponent implements OnInit {
 
   listaCuestionarios: Cuestionario[] = []
   coloresCuestionarios: string[] = []
 
-  constructor(private cuestionarioService: CuestionarioService, private toastr: ToastrService, private router: Router) { 
+  constructor(private cuestionarioService: CuestionarioService, private toastr: ToastrService, private router: Router) {}
+  ngOnInit(): void {
     this.getListaCuestionarios()
   }
 
