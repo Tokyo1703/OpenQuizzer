@@ -21,6 +21,17 @@ export class CuestionarioController {
         }
     }
 
+    static async ListarMisCuestionarios(req, res) {
+        const token = req.cookies.access_token
+        
+
+        try {
+            const cuestionarios = await CuestionarioModel.ListarMisCuestionarios(token)
+            res.status(200).json({ Mensaje: "Lista de cuestionarios obtenidos", cuestionarios })
+        } catch (error) {
+            res.status(error.code || 500).json({ Error: error.message })
+        }
+    }
     static async CompletoPublico(req, res) {
         const inputData = req.params
 

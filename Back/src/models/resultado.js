@@ -30,23 +30,10 @@ export class ResultadoModel {
     }
 
     static async GetListaResultadoIndividual(token) {
-        let infoUsuario = null
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
         let cuestionarios = []
-        if (!token) {
-            const error = new Error("No se ha proporcionado un token")
-            error.code = 401
-            throw error
-        }
 
-
-        try {
-            infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
-            
-        } catch (e) {
-            const error = new Error("Error por token inválido")
-            error.code = 401
-            throw error
-        }
+    
         
         try {
             const [resultados] = await connection.query(
@@ -71,23 +58,10 @@ export class ResultadoModel {
 
     static async GetResultadoIndividual({inputData}, token) {
         const idResultado = Number(inputData.id);
-        let infoUsuario = null
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
         let resultado = null
         let preguntasContestadas = null
         let cuestionario = null
-        if (!token) {
-            const error = new Error("No se ha proporcionado un token")
-            error.code = 401
-            throw error
-        }
-        try {
-            infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
-            
-        } catch (e) {
-            const error = new Error("Error por token inválido")
-            error.code = 401
-            throw error
-        }
         
         try {
             const [resultadoQuery] = await connection.query(

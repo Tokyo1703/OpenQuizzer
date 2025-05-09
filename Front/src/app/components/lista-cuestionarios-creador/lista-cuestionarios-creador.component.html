@@ -1,0 +1,21 @@
+<div class="d-flex flex-column align-items-center p-4">
+    @for(cuestionario of listaCuestionarios; track cuestionario; let index = $index){
+        <div class="p-4 m-3 rounded bg-green shadow d-flex flex-column align-items-start justify-content-lg-between" 
+        style="max-width: 1200px; width: 90%; min-height: 50px;">
+            <div class="px-3 d-flex flex-wrap justify-content-center align-items-center justify-content-lg-between"
+            style="max-width: 1200px; width: 90%;">
+                
+                <h4>{{cuestionario.nombre}}</h4>
+                <div class="bg-lila d-flex justify-content-center align-items-center p-2 pb-1" style="border-radius: 10px;">
+                    @if(cuestionario.privacidad=="Privado"){
+                        <h5>Privado</h5>
+                    }
+                    @else {
+                        <h5>Público</h5>
+                    }
+                </div>
+            </div>
+            <p class="ps-3"style="max-width: 700px; width: 90%;">{{cuestionario.descripcion}}</p>
+        </div>
+    }
+</div>

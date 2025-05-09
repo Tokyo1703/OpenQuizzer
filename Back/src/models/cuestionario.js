@@ -54,19 +54,8 @@ export class CuestionarioModel {
     }
 
     static async ListarMisCuestionarios(token) {
-        const infoUsuario = null
-        if (!token) {
-            const error = new Error("Identificate pasa acceder a tus cuestionarios")
-            error.code = 403
-            throw error
-        }
-        try {
-            infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
-        } catch (e) {
-            const error = new Error("Identificate pasa acceder a tus cuestionarios")
-            error.code = 403
-            throw error
-        }
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
+
 
         try{
             const [cuestionarios] = await connection.query(

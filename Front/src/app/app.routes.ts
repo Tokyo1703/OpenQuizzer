@@ -10,7 +10,7 @@ import { ListaCuestionariosComponent } from './components/lista-cuestionarios/li
 import { ListaResultadosIndividualesComponent } from './components/lista-resultados-individuales/lista-resultados-individuales.component';
 import { AppComponent } from './app.component';
 import { ResultadoIndividualCompletoComponent } from './components/resultado-individual-completo/resultado-individual-completo.component';
-
+import { ListaCuestionariosCreadorComponent } from './components/lista-cuestionarios-creador/lista-cuestionarios-creador.component';
 
 export const routes: Routes = [
     {path: '', component: AppComponent},
@@ -23,6 +23,7 @@ export const routes: Routes = [
             {path: 'crearCuestionario', component: CreacionCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardCreador]},
+            {path: 'cuestionariosCreados', component: ListaCuestionariosCreadorComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardCreador]}
             
