@@ -1,5 +1,6 @@
 import connection from '../connection_db/connection.js'
 import bcrypt from 'bcrypt'
+import e from 'express'
 import jwt from 'jsonwebtoken'
 
 export class UsuarioModel {
@@ -86,6 +87,72 @@ export class UsuarioModel {
         }
     }
 
+    static async Modificar({inputData}, token){
+        const {nombreUsuario, nombre, apellidos, contrasena, correo} = inputData
+        let query = null
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET)
+
+        if(nombreUsuario !== infoUsuario.nombreUsuario){
+            const error = new Error('No puedes modificar este usuario')
+            error.code = 403
+            throw error
+        }
+
+        try {
+            [query] = await connection.query('Select * from usuario where correo = ?',[correo])
+        }
+        catch (e) {
+            const error = new Error('Error de acceso a la base de datos')
+            error.code = 500
+            throw error
+        }
+
+        if(query.length > 0 && query[0].nombreUsuario !== nombreUsuario){
+            const error = new Error('Ya existe un usuario con este correo')
+            error.code = 409
+            throw error
+        }
+
+        
+        if(contrasena == ""){
+            try {
+                
+                const usuario = await connection.query(
+                    'UPDATE usuario SET nombre = ?, apellidos = ?, correo = ? WHERE nombreUsuario = ?',
+                    [nombre, apellidos, correo, nombreUsuario]
+                )
+                
+            }
+            catch(e){
+                const error = new Error("Error de acceso a la base de datos")
+                error.code = 500
+                throw error
+            }
+        }
+        else{
+                const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+                if(!(regex.test(contrasena))){
+                    const error = new Error('La contraseña debe tener al menos 8 caracteres, una letra y un número')
+                    error.code = 400
+                    throw error
+                }
+                const contrasenahashed = await bcrypt.hash(contrasena, 10)
+            try {
+                
+                const usuario = await connection.query(
+                'UPDATE usuario SET nombre = ?, apellidos = ?, correo = ?, contrasena = ? WHERE nombreUsuario = ?',
+                [nombre, apellidos, correo, contrasenahashed, nombreUsuario]
+                )
+                
+            }
+            catch(e){
+                const error = new Error("Error de acceso a la base de datos")
+                error.code = 500
+                throw error
+            }
+
+        }
+    }
     static async Login({inputData}){
         const {nombreUsuario: inputUsuario, contrasena: inputContrasena} = inputData
         

@@ -3,7 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { HomeCreadorComponent } from './components/home-creador/home-creador.component';
 import { HomeParticipanteComponent } from './components/home-participante/home-participante.component';
-import { autenticacionGuardSinSesion, autenticacionGuardCreador, autenticacionGuardParticipante} from './guards/autenticacion.guard';
+import { autenticacionGuard, autenticacionGuardCreador, autenticacionGuardParticipante} from './guards/autenticacion.guard';
 import { CreacionCuestionarioComponent } from './components/creacion-cuestionario/creacion-cuestionario.component';
 import { RealizarCuestionarioIndividualComponent } from './components/realizar-cuestionario-individual/realizar-cuestionario-individual.component';
 import { ListaCuestionariosComponent } from './components/lista-cuestionarios/lista-cuestionarios.component';
@@ -11,6 +11,7 @@ import { ListaResultadosIndividualesComponent } from './components/lista-resulta
 import { AppComponent } from './app.component';
 import { ResultadoIndividualCompletoComponent } from './components/resultado-individual-completo/resultado-individual-completo.component';
 import { ListaCuestionariosCreadorComponent } from './components/lista-cuestionarios-creador/lista-cuestionarios-creador.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 export const routes: Routes = [
     {path: '', component: AppComponent},
@@ -25,8 +26,8 @@ export const routes: Routes = [
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'cuestionariosCreados', component: ListaCuestionariosCreadorComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuardCreador]},
-            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardCreador]}
-            
+            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardCreador]},
+            {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuard]},
         ]
     },
     {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent},

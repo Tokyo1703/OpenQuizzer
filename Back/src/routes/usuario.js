@@ -13,6 +13,7 @@ UsuarioRouter.post('/crear', UsuarioController.Create)
 //Rutas protegidas con autenticación
 UsuarioRouter.use(Autenticacion())
 
+UsuarioRouter.put('/modificar', UsuarioController.Modificar)
 UsuarioRouter.get('/perfil', UsuarioController.Perfil)
 UsuarioRouter.post('/logout', UsuarioController.Logout)
 

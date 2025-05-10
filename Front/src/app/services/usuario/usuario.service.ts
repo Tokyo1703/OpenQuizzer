@@ -42,6 +42,15 @@ export class UsuarioService {
     )
   }
 
+  modificarPerfil(usuario: Usuario): Observable<any> {
+    return this.http.put(`${this.apiUrl}/usuarios/modificar`, usuario, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError = error.error?.Error || 'Error desconocido al modificar el perfil';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
   cerrarSesion(): Observable<any> {
     localStorage.removeItem('perfil');
     return this.http.post(`${this.apiUrl}/usuarios/logout`, {}, {withCredentials: true}).pipe(

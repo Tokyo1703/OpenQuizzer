@@ -53,6 +53,16 @@ export class UsuarioController {
         res.status(200).json({perfil: usuario})
     }
 
+    static async Modificar(req,res){
+        const inputData = req.body
+        const token = req.cookies.access_token
+        try {
+            await UsuarioModel.Modificar({inputData}, token)
+            res.status(200).json({Mensaje: "Modificación correcta"})
+        } catch (error) {
+            res.status(error.code || 500).json({Error: error.message})
+        }
+    }
 
     static async Logout(req,res){
         try {
@@ -62,7 +72,6 @@ export class UsuarioController {
                 .status(200).json({Mensaje: "Sesión cerrada correctamente"})
         } catch (error) {
             res.status(500).json({Error: "Error al cerrar sesión"})
-        }
-                
+        }      
     }
 }
