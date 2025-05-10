@@ -10,7 +10,16 @@
                 </div>
             </div>
             <p> {{resultado.cuestionario.descripcion}}</p>
-            <button class= "green-button" [routerLink]="['/homeCreador/resultadoIndividualCompleto', resultado.idIndividual]">Ver resultado completo</button>
+            @if (rol=="Creador") {
+                <button class= "green-button" [routerLink]="['/homeCreador/resultadoIndividualCompleto', resultado.idIndividual]">
+                    Ver resultado completo
+                </button>
+            }
+            @else {
+                <button class= "green-button" [routerLink]="['/homeParticipante/resultadoIndividualCompleto', resultado.idIndividual]">
+                    Ver resultado completo
+                </button>
+            }
         
         </div>
     } 

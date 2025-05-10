@@ -5,6 +5,7 @@ import { ResultadoService } from '../../services/resultado/resultado.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { Cuestionario } from '../../interfaces/cuestionario';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-lista-resultados-individuales',
@@ -16,10 +17,22 @@ export class ListaResultadosIndividualesComponent implements OnInit {
   listaResultados: (ResultadoIndividualRecibido & { cuestionario: Cuestionario })[] = [];
   listaCuestionarios: Cuestionario[] = []
   coloresResultados: string[] = []
+  rol: string = ''
 
-  constructor(private resultadoService: ResultadoService, private toastr: ToastrService, private router: Router) {}
+  constructor(private resultadoService: ResultadoService, private toastr: ToastrService, private router: Router,
+  private usuarioService: UsuarioService) {}
+
   ngOnInit() {
     this.getResultadosIndividuales()
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        this.rol = res.perfil.rol
+      },
+      error: (e) => {
+        this.toastr.error(e.message, 'Error', { timeOut: 8000, closeButton: true })
+      }
+    })
+
   }
 
   getResultadosIndividuales(){
@@ -66,8 +79,5 @@ export class ListaResultadosIndividualesComponent implements OnInit {
     return `${day}/${month}/${year}`; 
   }
 
-  resultadoCompleto(idCuestionario: number) {
-    this.router.navigate(['resultadoIndividualCompleto']);
-    
-  }
+  
 }

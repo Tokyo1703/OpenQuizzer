@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { UsuarioService } from '../../services/usuario/usuario.service';
-import { Usuario } from '../../interfaces/usuario';
-
 import { ToastrService } from 'ngx-toastr';
+import { Usuario } from '../../interfaces/usuario';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
-  selector: 'app-menu-creador',
+  selector: 'app-menu-perfil',
   imports: [RouterModule],
-  templateUrl: './menu-creador.component.html',
-  styleUrl: './menu-creador.component.css'
+  templateUrl: './menu-perfil.component.html',
+  styleUrl: './menu-perfil.component.css'
 })
-export class MenuCreadorComponent {
-  
+export class MenuPerfilComponent {
   perfil: Usuario ={
     nombre: '',
     apellidos: '',

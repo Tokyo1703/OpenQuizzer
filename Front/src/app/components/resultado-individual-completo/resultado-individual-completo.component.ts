@@ -6,6 +6,7 @@ import { ResultadoService } from '../../services/resultado/resultado.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { PreguntaContestada, PreguntaContestadaCompleta, PreguntaRecibidadBackend } from '../../interfaces/pregunta';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-resultado-individual-completo',
@@ -31,15 +32,27 @@ export class ResultadoIndividualCompletoComponent implements OnInit {
     descripcion: '',
     privacidad: ''
   }
+  rol: string = ''
   
   
   
-  constructor(private resultadoService: ResultadoService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute) { } 
+  constructor(private resultadoService: ResultadoService, private toastr: ToastrService, private router: Router,
+    private usuarioService: UsuarioService, private route: ActivatedRoute) { } 
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.idResultado = Number(params.get('id'));
     });
+    
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        this.rol = res.perfil.rol
+      },
+      error: (e) => {
+        this.toastr.error(e.message, 'Error', { timeOut: 8000, closeButton: true })
+      }
+    })
+
     this.getResultadoIndividualCompleto(this.idResultado)
   }
   

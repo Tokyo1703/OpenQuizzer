@@ -67,7 +67,12 @@
                 </div>
             }
         }
-        <button class="lila-button m-2" [routerLink]="['/homeCreador/resultadosIndividuales']">Volver</button>
+        @if(rol=="Creador"){
+            <button class="lila-button m-2" [routerLink]="['/homeCreador/resultadosIndividuales']">Volver</button>
+        }
+        @else {
+            <button class="lila-button m-2" [routerLink]="['/homeParticipante/resultadosIndividuales']">Volver</button>
+        }
     </div>
 
 </div>

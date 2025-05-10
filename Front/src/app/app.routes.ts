@@ -17,7 +17,14 @@ export const routes: Routes = [
     {path: '', component: AppComponent},
     {path: 'login', component: LoginComponent},
     {path: 'registro', component: RegistroComponent},
-    {path: 'homeParticipante', component: HomeParticipanteComponent, canActivate: [autenticacionGuardParticipante]},
+    {path: 'homeParticipante', component: HomeParticipanteComponent, canActivate: [autenticacionGuardParticipante],
+        children: [
+            {path: '', redirectTo: 'publicos', pathMatch: 'full' },
+            {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardParticipante]},
+            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuard]},
+            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]}
+            ]
+    },
     {path: 'homeCreador', component: HomeCreadorComponent, canActivate: [autenticacionGuardCreador],
         children: [
             {path: '', redirectTo: 'publicos', pathMatch: 'full' },
@@ -25,11 +32,12 @@ export const routes: Routes = [
             {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'cuestionariosCreados', component: ListaCuestionariosCreadorComponent, canActivate: [autenticacionGuardCreador]},
-            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuardCreador]},
-            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardCreador]},
-            {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuard]},
+            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuard]},
+            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]}
         ]
     },
+    {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuard]},
+    
     {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
