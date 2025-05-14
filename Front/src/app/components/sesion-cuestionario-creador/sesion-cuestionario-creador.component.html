@@ -1,0 +1,117 @@
+<div class="d-flex justify-content-center align-items-center pt-4 mb-4">
+
+    @if(paso=="SalaEspera"){
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <div class="d-flex justify-content-end" style="max-width: 1200px; width: 90%;">
+            <div class="p-2 m-2 rounded shadow text-center bg-lila">
+                <h5>{{numeroParticipantes}} participantes</h5>
+            </div>
+        </div>
+        <div class="d-flex flex-column text-center">
+            <h1>Sala</h1>
+            <h1>{{codigo}}</h1>
+        </div>
+        
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
+            @for(participante of participantes; track participante; let index=$index){                
+                <div class="p-2 m-2 rounded shadow text-center bg-lila">
+                    <h2>{{participante}}</h2>
+                </div>
+            }
+        </div>
+        <div class="m-2 d-flex align-items-center">
+            <button class="lila-button m-2" (click)="cerrarSesion()">Salir</button>
+            @if(numeroParticipantes>0){
+                <button class="lila-button m-2" (click)="iniciarCuestionario()">Iniciar Cuestionario</button>
+            }
+        </div>
+    </div>
+    }
+    
+    @if(paso=="InicioCuestionario") {
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center position-relative"
+    style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <h1>{{cuestionario.nombre}}</h1>
+    </div>
+    }
+    @if(paso=="CuentaAtras") {
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center position-relative"
+    style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <h1>{{tiempoRestante}}</h1>
+    </div>
+    }
+    
+    
+    @if(paso=="Pregunta"){
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <div class="d-flex justify-content-end" style="max-width: 1200px; width: 90%;">
+            <div class="p-2 m-2 rounded shadow text-center bg-lila">
+                {{ tiempoRestante }}s
+            </div>
+        </div>
+        <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+            <h2>{{preguntas[numeroPregunta].contenido}}</h2>
+        </div>
+        @if(!(preguntas[numeroPregunta].tipo=="RespuestaAbierta")){
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+                @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                    <div  class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue">
+                        <h3>{{respuesta.contenido}}</h3>
+                    </div>
+                    
+                }
+            </div>
+        }
+    </div>
+    }
+    @if(paso=="Resultado"){
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+            <h2>{{preguntas[numeroPregunta].contenido}}</h2>
+        </div>
+        @if(preguntas[numeroPregunta].tipo=="RespuestaAbierta"){
+            <div class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue "> 
+                <h4>Respuesta correcta</h4>
+                <h5>{{preguntas[numeroPregunta].respuestas[0].contenido}}</h5>
+            </div>
+        }
+        @else {
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between">
+                @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                    @if(respuesta.correcta=="Correcta"){
+                        <div  class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue">
+                            <h4>Respuesta correcta</h4>
+                            <h5>{{respuesta.contenido}}</h5>
+                        </div>
+                    }
+                    @else {
+                        <div  class="p-4 m-2 rounded shadow text-center" style="background-color:firebrick">
+                            <h4>Respuesta incorrecta</h4>
+                            <h5>{{respuesta.contenido}}</h5>
+                        </div>
+                    }
+                }
+            </div>
+        }
+        @if(numeroPregunta==preguntas.length-1){
+            <button class="lila-button" (click)="resultadoFinal()">Finalizar cuestionario</button>
+        }
+        @else {
+            <button class="lila-button" (click)="cuentaAtras()">Siguiente pregunta</button>
+        }
+    </div>
+    }
+    @if(paso=="ResultadoFinal"){
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    style="max-width: 1200px; width: 90%; min-height: 600px;">
+        <h2>Resultados</h2>
+        <button class="lila-button" (click)="cerrarSesion()">Salir</button>
+    </div>
+    }
+    
+    
+
+</div>

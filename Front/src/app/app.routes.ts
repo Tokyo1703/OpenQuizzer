@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { ResultadoIndividualCompletoComponent } from './components/resultado-individual-completo/resultado-individual-completo.component';
 import { ListaCuestionariosCreadorComponent } from './components/lista-cuestionarios-creador/lista-cuestionarios-creador.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { SesionCuestionarioComponent } from './components/sesion-cuestionario/sesion-cuestionario.component';
+import { SesionCuestionarioCreadorComponent } from './components/sesion-cuestionario-creador/sesion-cuestionario-creador.component';
 
 export const routes: Routes = [
     {path: '', component: AppComponent},
@@ -37,7 +39,8 @@ export const routes: Routes = [
         ]
     },
     {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuard]},
-    
+    {path: 'sesionCuestionarioCreador/:id', component: SesionCuestionarioCreadorComponent, canActivate: [autenticacionGuardCreador]},
+    {path: 'sesionCuestionario/:codigo', component: SesionCuestionarioComponent},
     {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

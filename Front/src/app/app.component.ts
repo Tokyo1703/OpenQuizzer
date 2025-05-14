@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { MenuPerfilComponent } from "./components/menu-perfil/menu-perfil.component";
 import { FormsModule } from '@angular/forms';
 import { ListaCuestionariosComponent } from "./components/lista-cuestionarios/lista-cuestionarios.component";
+import { SocketService } from './services/socket/socket.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,9 +18,9 @@ import { ListaCuestionariosComponent } from "./components/lista-cuestionarios/li
 })
 
 export class AppComponent implements OnInit {
-  codigoCuestionario: string="";
+  codigoSesion: string="";
 
-  constructor(private router:Router, private usuarioService: UsuarioService) {}
+  constructor(private router:Router, private usuarioService: UsuarioService, private socketService: SocketService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.usuarioService.getPerfil().subscribe({
@@ -45,6 +47,6 @@ export class AppComponent implements OnInit {
   }
 
   UnirseCuestionario() {
-
+   this.router.navigate(['/sesionCuestionario', this.codigoSesion]);
   }
 }

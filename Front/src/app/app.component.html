@@ -5,9 +5,9 @@
             <span class="ms-4 text-white fw-bold d-none d-none d-sm-block" >OpenQuizzer</span>
         </a>
 
-        @if(!MostrarRutaSubrutas("/realizarCuestionarioIndividual")){
+        @if(!MostrarRutaSubrutas("/realizarCuestionarioIndividual") &&  !MostrarRutaSubrutas("/sesionCuestionario")){
             <div class="d-flex align-items-center m-0" style="max-width: 280px;">
-                <input type="text" [(ngModel)]="codigoCuestionario"  class="form-control" placeholder="Código de cuestionario" >
+                <input type="text" [(ngModel)]="codigoSesion"  class="form-control" placeholder="Código de sesión" >
                 <button class="green-button ms-2 px-3 py-1" (click)="UnirseCuestionario()">Unirse</button>
             </div>
         }

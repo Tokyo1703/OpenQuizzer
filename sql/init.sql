@@ -72,7 +72,6 @@ create table if not exists resultadoIndividual(
     hora time not null,
     puntuacionFinal int not null,
     constraint fk_IndividualCuestionario foreign key (idCuestionario) references cuestionario(idCuestionario),
-    constraint fk_IndividualUsuario foreign key (nombreUsuario) references usuario(nombreUsuario)
 );
 
 create table if not exists grupalIndividual(

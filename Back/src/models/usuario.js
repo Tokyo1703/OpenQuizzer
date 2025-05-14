@@ -90,7 +90,7 @@ export class UsuarioModel {
     static async Modificar({inputData}, token){
         const {nombreUsuario, nombre, apellidos, contrasena, correo} = inputData
         let query = null
-        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET)
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET||'secret')
 
         if(nombreUsuario !== infoUsuario.nombreUsuario){
             const error = new Error('No puedes modificar este usuario')

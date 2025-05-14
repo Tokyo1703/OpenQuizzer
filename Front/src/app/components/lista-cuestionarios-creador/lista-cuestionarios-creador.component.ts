@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { CuestionarioService } from '../../services/cuestionario/cuestionario.service';
 import { Cuestionario } from '../../interfaces/cuestionario';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-cuestionarios-creador',
@@ -13,7 +14,7 @@ export class ListaCuestionariosCreadorComponent implements OnInit {
 
   listaCuestionarios: Cuestionario[] = []
 
-  constructor(private cuestionarioService: CuestionarioService, private toastr: ToastrService) { }
+  constructor(private cuestionarioService: CuestionarioService, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.getListaCuestionarios()
@@ -28,5 +29,10 @@ export class ListaCuestionariosCreadorComponent implements OnInit {
         this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
       }
     })
+  }
+
+  IniciarCuestionario(id:number){
+    this.router.navigate(['/sesionCuestionarioCreador', id])
+    
   }
 }

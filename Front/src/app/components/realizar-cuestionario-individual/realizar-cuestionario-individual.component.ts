@@ -114,10 +114,9 @@ export class RealizarCuestionarioIndividualComponent {
     this.intervaloControlador = setInterval(() => {
       this.tiempoRestante--;
       if (this.tiempoRestante <= 0) {
-        this.finPregunta();     // se acabó el tiempo
+        this.finPregunta();    
       }
     }, 1000);
-    
   }
 
   guardarRespuesta(contenido: string) {

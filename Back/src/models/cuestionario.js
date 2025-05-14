@@ -73,29 +73,31 @@ export class CuestionarioModel {
 
     static async MiCuestionarioCompleto(token, {inputData}) {
         const idCuestionario = inputData.id
-        const infoUsuario = null
-        if (!token) {
-            const error = new Error("Identificate pasa acceder a tu cuestionarios")
-            error.code = 403
-            throw error
-        }
-        try {
-            infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
-        } catch (e) {
-            const error = new Error("Identificate pasa acceder a tu cuestionarios")
-            error.code = 403
-            throw error
-        }
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET|| 'secret')
 
-        try{
-            const [cuestionario] = await connection.query(
-                `SELECT * FROM cuestionario WHERE nombreUsuario = ? and idCuestionario = ?`,
-                [infoUsuario.nombreUsuario, idCuestionario]
-            )
-            const [preguntas] = await connection.query(
-                `SELECT * FROM pregunta WHERE idCuestionario = ?`,
+        try {
+            const [cuestionarioQuery] = await connection.query(
+                `SELECT * FROM cuestionario WHERE idCuestionario = ?`,
                 [idCuestionario]
             )
+            if (cuestionarioQuery.length === 0) {
+                const error = new Error("Cuestionario no encontrado")
+                error.code = 404
+                throw error
+            }
+            const cuestionario = cuestionarioQuery[0]
+    
+            if(cuestionario.nombreUsuario !== infoUsuario.nombreUsuario){
+                const error = new Error("Este cuestionario no es público, no tienes acceso")
+                error.code = 403
+                throw error
+            }
+
+            const [preguntas] = await connection.query(
+                `SELECT idPregunta, tipo, tiempo, contenido, puntuacion, puntosSegundo FROM pregunta WHERE idCuestionario = ?`,
+                [idCuestionario]
+            )
+
             for (const pregunta of preguntas) {
                 const [respuestas] = await connection.query(
                     `SELECT contenido, correcta FROM respuesta WHERE idPregunta = ?`,
@@ -105,8 +107,9 @@ export class CuestionarioModel {
             }
             
             return {cuestionario, preguntas}
-        }catch(e){
-            const error = new Error("Error de acceso a la base de datos")
+
+        } catch (e) {
+            const error = new Error(e.message)
             error.code = 500
             throw error
         }
