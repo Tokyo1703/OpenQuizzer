@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Cuestionario } from '../../interfaces/cuestionario';
 import { PreguntaRecibidadBackend } from '../../interfaces/pregunta';
+import { ResultadoGrupal } from '../../interfaces/resultado';
+import { ResultadoService } from '../../services/resultado/resultado.service';
 
 @Component({
   selector: 'app-sesion-cuestionario-creador',
@@ -30,24 +32,26 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
     privacidad: ''
   }
   preguntas: PreguntaRecibidadBackend[] = []
+  resultadoGrupal: ResultadoGrupal = {
+    idResultadoGrupal: -1,
+    idCuestionario: -1,
+    fecha: '',
+    hora: ''
+  }
+  
 
   constructor(private socketService: SocketService, private route: ActivatedRoute, private router: Router,
-              private cuestionarioService: CuestionarioService, private toastr: ToastrService) { }
+      private cuestionarioService: CuestionarioService, private toastr: ToastrService, private resultadoService: ResultadoService) {}
 
   ngOnInit(): void {
 
+    this.route.paramMap.subscribe(params => {
+      this.cuestionario.idCuestionario = Number(params.get('id'));
+    });
 
     this.obtenerCuestionario();
 
-    this.socketService.crearSesion(this.cuestionario.idCuestionario).subscribe({
-      next: (data) => {
-        this.codigo = Number(data.codigoSesion);
-        this.toastr.success('Sesión creada correctamente', 'Correcto', {timeOut: 8000, closeButton: true})
-      },
-      error: (e) => {
-        this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
-      }
-    })
+    
 
     
     
@@ -60,14 +64,20 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
   }
 
   obtenerCuestionario(){
-    this.route.paramMap.subscribe(params => {
-      this.cuestionario.idCuestionario = Number(params.get('id'));
-    });
 
-    this.cuestionarioService.getCuestionarioCompleto(this.cuestionario.idCuestionario).subscribe({
+    this.cuestionarioService.getMiCuestionarioCompleto(this.cuestionario.idCuestionario).subscribe({
       next: (res) => {
         this.cuestionario=res.cuestionario
         this.preguntas=res.preguntas
+        this.socketService.crearSesion(this.cuestionario,this.preguntas).subscribe({
+          next: (data) => {
+            this.codigo = Number(data.codigoSesion);
+            this.toastr.success('Sesión creada correctamente', 'Correcto', {timeOut: 8000, closeButton: true})
+          },
+          error: (e) => {
+            this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
+          }
+        })
       },
       error: (e) => {
         this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
@@ -77,7 +87,7 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
 
   
   iniciarCuestionario(){
-    
+    this.socketService.iniciarCuestionario(this.codigo)
     this.paso="InicioCuestionario"
     this.tiempoRestante=4
     this.intervaloControlador = setInterval(() => {
@@ -90,7 +100,7 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
   
   cuentaAtras(){
     clearInterval(this.intervaloControlador)
-    this.tiempoRestante=4
+    this.tiempoRestante=3
     this.paso="CuentaAtras"
     this.intervaloControlador = setInterval(() => {
       this.tiempoRestante--;
@@ -105,30 +115,48 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
     this.numeroPregunta++;
     this.paso="Pregunta"
 
-    /*this.socketService.onTodosRespondidos(this.codigo).subscribe(data => {
-      this.finPregunta()
-    })*/
-
     this.tiempoRestante = this.preguntas[this.numeroPregunta].tiempo;
     this.intervaloControlador = setInterval(() => {
       this.tiempoRestante--;
       if (this.tiempoRestante <= 0) {
-        this.finPregunta()
+        this.enResultado()
       }
     }, 1000)
 
-    
+    this.socketService.onceEscucharRespuestas().subscribe(() => {
+      this.enResultado()
+    })
   }
 
-  finPregunta(){
+  enResultado(){
     clearInterval(this.intervaloControlador)
-    
     this.paso="Resultado"
   }
 
-  resultadoFinal(){
+  siguientePregunta(){
+    this.socketService.siguientePregunta(this.codigo)
+    this.cuentaAtras()
+  }
+
+  finalCuestionario(){
+    this.resultadoGrupal = {
+      idResultadoGrupal: -1,
+      idCuestionario: this.cuestionario.idCuestionario,
+      fecha: new Date().toISOString().slice(0, 10),
+      hora: new Date().toTimeString().slice(0, 8)
+    }
+    this.resultadoService.guardarResultadoGrupal(this.resultadoGrupal).subscribe({
+      next: (res) => {
+        this.resultadoGrupal.idResultadoGrupal = res.idResultado
+        this.toastr.success('Resultados guardados correctamente', 'Correcto', {timeOut: 8000, closeButton: true})
+        this.socketService.finalizarCuestionario(this.codigo, this.resultadoGrupal)
+      }
+      , error: (e) => {
+        this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
+      }
+    })
     
-    this.paso="ResultadoFinal"
+    this.paso="FinalCuestionario"
   }
 
   cerrarSesion(){

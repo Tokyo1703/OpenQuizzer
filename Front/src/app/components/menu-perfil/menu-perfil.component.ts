@@ -21,11 +21,14 @@ export class MenuPerfilComponent {
   }
 
   constructor(private usuarioService: UsuarioService, private router: Router, private toastr: ToastrService ){
-    const perfilGuardado = localStorage.getItem('perfil');
-
-    if (perfilGuardado) {
-      this.perfil = JSON.parse(perfilGuardado);
-    }
+     this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        this.perfil = res.perfil
+      },
+      error: (e) => {
+        this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
+      }
+    })
   }
 
 

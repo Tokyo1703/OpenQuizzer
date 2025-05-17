@@ -6,8 +6,8 @@ export class ResultadoController {
         const inputData = req.body
 
         try {
-            await ResultadoModel.CreateResultadoCuestionarioIndividual({inputData})
-            res.status(201).json({Mensaje: "Resultado creado"})
+            const {idResultado} = await ResultadoModel.CreateResultadoCuestionarioIndividual({inputData})
+            res.status(201).json({Mensaje: "Resultado creado", idResultado})
         } catch (error) {
             res.status(error.code || 500).json({Error: error.message})
         }
@@ -33,5 +33,27 @@ export class ResultadoController {
         } catch (error) {
             res.status(error.code || 500).json({ Error: error.message })
         }
+    }
+
+    static async CreateResultadoGrupal(req, res){
+        const inputData = req.body
+
+        try {
+            const {idResultado} = await ResultadoModel.CreateResultadoGrupal({inputData})
+            res.status(201).json({Mensaje: "Resultado creado", idResultado})
+        } catch (error) {
+            res.status(error.code || 500).json({Error: error.message})
+        }   
+    }
+
+    static async CreateGrupalIndividual(req, res){
+        const inputData = req.body
+
+        try {
+            await ResultadoModel.CreateGrupalIndividual({inputData})
+            res.status(201).json({Mensaje: "Resultado asociado correctamente"})
+        } catch (error) {
+            res.status(error.code || 500).json({Error: error.message})
+        }   
     }
 }

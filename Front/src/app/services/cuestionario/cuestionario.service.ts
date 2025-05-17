@@ -38,6 +38,15 @@ export class CuestionarioService {
       })
     )
   }
+  
+  getMiCuestionarioCompleto(idCuestionario: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/cuestionarios/completo/${idCuestionario}`, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al obtener el cuestionario';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
 
   getMisCuestionarios(): Observable<any> {
     return this.http.get(`${this.apiUrl}/cuestionarios/misCuestionarios`,{withCredentials: true}).pipe(

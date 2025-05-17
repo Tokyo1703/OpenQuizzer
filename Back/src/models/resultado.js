@@ -21,8 +21,44 @@ export class ResultadoModel {
                     [resQueryResultado.insertId, pregunta.idPregunta, pregunta.respuesta, pregunta.tiempo, pregunta.puntuacion]
                 )
             }
+            return {idResultado: resQueryResultado.insertId}
         }
         catch(e){
+            const error = new Error("Error de acceso a la base de datos")
+            error.code = 500
+            throw error
+        }
+    }
+
+    static async CreateResultadoGrupal({inputData}) {
+
+        const resultado = inputData.resultadoGrupal
+
+        try {
+            const [resQueryResultado] = await connection.query(
+                `INSERT INTO resultadoGrupal (idCuestionario, fecha, hora)
+                 VALUES (?, ?, ?)`,
+                [resultado.idCuestionario, resultado.fecha, resultado.hora]
+            )
+            return {idResultado: resQueryResultado.insertId}
+        }
+        catch(e){
+            const error = new Error("Error de acceso a la base de datos")
+            error.code = 500
+            throw error
+        }
+    }
+
+    static async CreateGrupalIndividual({inputData}) {
+        const idIndividual = inputData.idIndividual
+        const idGrupal = inputData.idGrupal
+        try {
+            const [resQuery] = await connection.query(
+                `INSERT INTO grupalIndividual (idGrupal, idIndividual)
+                 VALUES (?, ?)`,
+                [idGrupal, idIndividual]
+            )
+        } catch (e) {
             const error = new Error("Error de acceso a la base de datos")
             error.code = 500
             throw error
@@ -32,8 +68,6 @@ export class ResultadoModel {
     static async GetListaResultadoIndividual(token) {
         const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
         let cuestionarios = []
-
-    
         
         try {
             const [resultados] = await connection.query(

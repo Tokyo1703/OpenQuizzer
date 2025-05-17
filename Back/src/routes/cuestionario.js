@@ -10,6 +10,7 @@ CuestionarioRouter.get('/completoPublico/:id', CuestionarioController.CompletoPu
 
 //Rutas protegidas con autenticación
 CuestionarioRouter.use(Autenticacion(["Creador"]))
+CuestionarioRouter.get('/completo/:id', CuestionarioController.Completo)
 CuestionarioRouter.get('/misCuestionarios', CuestionarioController.ListarMisCuestionarios)
 CuestionarioRouter.post('/crear', CuestionarioController.Create)
 

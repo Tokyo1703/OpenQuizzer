@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { ResultadoIndividual } from '../../interfaces/resultado';
 import { ResultadoService } from '../../services/resultado/resultado.service';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-realizar-cuestionario-individual',
@@ -66,13 +67,14 @@ export class RealizarCuestionarioIndividualComponent {
 
 
   constructor(private route: ActivatedRoute, private router: Router, private cuestionarioService: CuestionarioService,
-    private toastr: ToastrService, private resultadoService: ResultadoService) { 
-    const perfilGuardado = localStorage.getItem('perfil');
-
-    if (perfilGuardado) {
-      this.perfil = JSON.parse(perfilGuardado);
-      this.registrado = true;
-    }
+    private toastr: ToastrService, private resultadoService: ResultadoService, private usuarioService: UsuarioService) { 
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        this.perfil = res.perfil
+        this.registrado = true;
+      },
+      error: (e) => {}}
+    )
 
     this.obtenerCuestionario()
 

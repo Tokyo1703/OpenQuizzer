@@ -7,6 +7,7 @@ import { CuestionarioService } from '../../services/cuestionario/cuestionario.se
 import { RouterModule } from '@angular/router';
 import { Usuario } from '../../interfaces/usuario';
 import e from 'express';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-creacion-cuestionario',
@@ -47,13 +48,19 @@ export class CreacionCuestionarioComponent {
       { contenido: "", correcta: "Falsa" }
     ]
   }
+  
 
-  constructor(private toastr: ToastrService, private router: Router, private cuestionarioService: CuestionarioService){
-    const perfilGuardado = localStorage.getItem('perfil');
-
-    if (perfilGuardado) {
-      this.perfil = JSON.parse(perfilGuardado);
-    }
+  constructor(private toastr: ToastrService, private router: Router, private cuestionarioService: CuestionarioService,
+    private usuarioService: UsuarioService){
+    
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        this.perfil = res.perfil
+      },
+      error: (e) => {
+        this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
+      }
+    })
   }
 
   Siguiente() {

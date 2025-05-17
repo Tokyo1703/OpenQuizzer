@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center align-items-center pt-4 mb-4">
     
     @if(paso=="IngresarNombre"){
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
         <div class="d-flex flex-column align-items-center text-center justify-content-center">
             <h2>Ingresa tu nombre</h2>
@@ -11,7 +11,7 @@
     </div>
     }
     @if(paso=="SalaEspera"){   
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
         <div class="d-flex justify-content-end" style="max-width: 1200px; width: 90%;">
             <div class="p-2 m-2 rounded shadow text-center bg-lila">
@@ -32,19 +32,18 @@
         </div>
         <h2>Esperando a que el anfitrión inicie la sesión...</h2>
         <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
     }
     
     @if(paso=="InicioCuestionario") {
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
         <h1>{{cuestionario.nombre}}</h1>
     </div>
     }
     @if(paso=="CuentaAtras") {
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
         <h1>{{tiempoRestante}}</h1>
     </div>
@@ -52,7 +51,7 @@
     
     
     @if(paso=="Pregunta"){
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
         <div class="d-flex justify-content-end" style="max-width: 1200px; width: 90%;">
             <div class="p-2 m-2 rounded shadow text-center bg-lila">
@@ -62,26 +61,47 @@
         <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
             <h2>{{preguntas[numeroPregunta].contenido}}</h2>
         </div>
-        @if(!(preguntas[numeroPregunta].tipo=="RespuestaAbierta")){
+        @if(preguntas[numeroPregunta].tipo=="RespuestaAbierta"){
+            <div class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue "> 
+                <label for="Respuesta Abierta" class="form-label">Introduce tu respuesta</label>
+                <input type="text" id="Respuesta Abierta" class="form-control" [(ngModel)]="nuevaPreguntaContestada.respuesta"  >
+            </div>
+            <button class="lila-button" (click)="finPregunta()">Enviar respuesta</button>
+        }
+        @else {
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
                 @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
-                    <div  class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue">
+                    <button  class="green-button m-2" style="background-color:royalblue"
+                    (click)="guardarRespuesta(respuesta.contenido)">
                         <h3>{{respuesta.contenido}}</h3>
-                    </div>
+                    </button>
                     
                 }
             </div>
         }
     </div>
     }
+    @if(paso=="EsperandoRespuestas"){
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center justify-content-lg-center"
+    style="max-width: 1200px; width: 90%; min-height: 400px;">
+        <h2>Esperando al resto de participantes...</h2>
+        <div class="spinner-border text-light" role="status"></div>
+    </div>
+    }
     @if(paso=="Resultado"){
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
         <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
             <h2>{{preguntas[numeroPregunta].contenido}}</h2>
         </div>
+        @if(preguntasContestadas[numeroPregunta].puntuacion>0){
+            <h3 class="fw-bold">Acertaste</h3>
+        }
+        @else {
+            <h3 class="fw-bold">Fallaste</h3>
+        }
         @if(preguntas[numeroPregunta].tipo=="RespuestaAbierta"){
-            <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color:royalblue "> 
+            <div class="p-4 m-2 rounded shadow text-center" style="background-color:royalblue "> 
                 <h4>Respuesta correcta</h4>
                 <h5>{{preguntas[numeroPregunta].respuestas[0].contenido}}</h5>
             </div>
@@ -107,9 +127,10 @@
     </div>
     }
     @if(paso=="ResultadoFinal"){
-    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-evenly justify-content-lg-evenly"
     style="max-width: 1200px; width: 90%; min-height: 400px;">
-        <h2>Resultados</h2>
+        <h2>Has obtenido {{resultadoIndividual.puntuacionFinal}} puntos</h2>
+        <button class="lila-button" (click)="salirCuestionario()">Salir</button>
     </div>
     }
     

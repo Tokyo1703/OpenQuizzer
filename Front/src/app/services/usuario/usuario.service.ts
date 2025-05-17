@@ -52,7 +52,7 @@ export class UsuarioService {
   }
 
   cerrarSesion(): Observable<any> {
-    localStorage.removeItem('perfil');
+    
     return this.http.post(`${this.apiUrl}/usuarios/logout`, {}, {withCredentials: true}).pipe(
       catchError(error => {
         const mensajeError = error.error?.Error || 'Error desconocido al cerrar sesión';

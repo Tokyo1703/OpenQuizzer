@@ -28,7 +28,7 @@ export class LoginComponent {
       next: (res) => {
         
         this.toastr.success('Login exitoso', 'Bienvenido/a ' + res.usuario.nombre, {timeOut: 8000, closeButton: true})
-        localStorage.setItem('perfil', JSON.stringify(res.usuario));
+        
         //Redirección en base al rol
         this.rol = res.usuario.rol
         if(this.rol=="Creador"){

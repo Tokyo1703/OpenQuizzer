@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResultadoIndividual } from '../../interfaces/resultado';
+import { ResultadoGrupal, ResultadoIndividual } from '../../interfaces/resultado';
 import { PreguntaContestada } from '../../interfaces/pregunta';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
@@ -15,8 +15,25 @@ export class ResultadoService {
   constructor(private http: HttpClient) { }
 
   guardarResultadoCuestionarioIndividual(resultadoIndividual: ResultadoIndividual, preguntasContestadas: PreguntaContestada[]) : Observable<any> {
-    return this.http.post(`${this.apiUrl}/resultados/crearResultadoCuestionarioIndividual` , {resultadoIndividual, preguntasContestadas},
-    {withCredentials: true}).pipe(
+    return this.http.post(`${this.apiUrl}/resultados/crearResultadoCuestionarioIndividual` , {resultadoIndividual, preguntasContestadas}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al guardar el resultado';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
+  guardarResultadoGrupal(resultadoGrupal: ResultadoGrupal): Observable<any> {
+    return this.http.post(`${this.apiUrl}/resultados/crearResultadoGrupal`, {resultadoGrupal}, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al guardar el resultado';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+  
+  guardarGrupalIndividual(idGrupal: number, idIndividual: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/resultados/crearGrupalIndividual`, {idGrupal, idIndividual}).pipe(
       catchError(error => {
         const mensajeError= error.error?.Error || 'Error desconocido al guardar el resultado';
         return throwError(() => new Error(mensajeError))

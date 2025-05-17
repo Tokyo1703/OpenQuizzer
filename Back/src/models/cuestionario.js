@@ -71,7 +71,7 @@ export class CuestionarioModel {
 
     }
 
-    static async MiCuestionarioCompleto(token, {inputData}) {
+    static async MiCuestionarioCompleto({inputData}, token) {
         const idCuestionario = inputData.id
         const infoUsuario = jwt.verify(token, process.env.JWT_SECRET|| 'secret')
 
@@ -113,7 +113,6 @@ export class CuestionarioModel {
             error.code = 500
             throw error
         }
-
     }
     
     static async CompletoPublico({inputData}, token) {

@@ -32,7 +32,6 @@ export const autenticacionGuardCreador: CanActivateFn = () => {
     }),
     catchError(() => {
       router.navigate(['/login']);
-      localStorage.removeItem('perfil');
       return of(false);
     })
   )
@@ -54,7 +53,6 @@ export const autenticacionGuardParticipante: CanActivateFn = () => {
     }),
     catchError(() => {
       router.navigate(['/login']);
-      localStorage.removeItem('perfil');
       return of(false);
     })
   )

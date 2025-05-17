@@ -34,10 +34,22 @@ export class CuestionarioController {
     }
     static async CompletoPublico(req, res) {
         const inputData = req.params
-
+        
         try {
             const token = req.cookies.access_token
             const { cuestionario, preguntas } = await CuestionarioModel.CompletoPublico({inputData}, token)
+            res.status(200).json({ Mensaje: "Cuestionario obtenido", cuestionario, preguntas })
+        } catch (error) {
+            res.status(error.code || 500).json({ Error: error.message })
+        }
+    }
+
+    static async Completo(req, res) {
+        const inputData = req.params
+
+        try {
+            const token = req.cookies.access_token
+            const { cuestionario, preguntas } = await CuestionarioModel.MiCuestionarioCompleto({inputData}, token)
             res.status(200).json({ Mensaje: "Cuestionario obtenido", cuestionario, preguntas })
         } catch (error) {
             res.status(error.code || 500).json({ Error: error.message })

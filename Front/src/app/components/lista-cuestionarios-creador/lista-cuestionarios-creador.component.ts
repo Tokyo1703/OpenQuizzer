@@ -31,8 +31,8 @@ export class ListaCuestionariosCreadorComponent implements OnInit {
     })
   }
 
-  IniciarCuestionario(id:number){
-    this.router.navigate(['/sesionCuestionarioCreador', id])
+  IniciarCuestionario(idCuestionario:number){
+    this.router.navigate(['/sesionCuestionarioCreador', idCuestionario])
     
   }
 }

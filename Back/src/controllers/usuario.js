@@ -1,4 +1,5 @@
 import { UsuarioModel } from "../models/usuario.js"
+import jwt from 'jsonwebtoken'
 
 export class UsuarioController {
     static async GetByNombreUsuario(req, res) {
@@ -26,8 +27,6 @@ export class UsuarioController {
         } catch (error) {
             res.status(error.code || 500).json({Error: error.message})
         }
-        
-
     }
 
     static async Login(req,res){
@@ -49,8 +48,10 @@ export class UsuarioController {
     }
 
     static async Perfil(req,res){
-        const {usuario} = req
-        res.status(200).json({perfil: usuario})
+
+        const token = req.cookies.access_token
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
+        res.status(200).json({perfil: infoUsuario})
     }
 
     static async Modificar(req,res){
