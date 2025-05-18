@@ -1,0 +1,195 @@
+<div class="d-flex justify-content-center align-items-center pt-4 mb-4">
+
+    <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-lg-between" style="max-width: 1200px; width: 90%; min-height: 600px;">
+
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between mb-3 " style="width: 90%;">
+            <button type="button" class="lila-button m-2" routerLink="/homeCreador">
+                <i class="bi bi-x-circle me-1"></i>
+                Cancelar
+            </button>
+            <h3 class="text-center">Nuevo Cuestionario</h3>
+            <button type="button" class="lila-button m-2" (click)="Guardar()">
+                Guardar
+                <i class="bi bi-floppy ms-1"></i>
+            </button>
+        </div>
+          
+        @if(numeroPregunta == -1){
+            <div class="d-flex flex-column align-items-center justify-content-around" style="max-width: 1200px; width: 90%;">
+                <div class="row text-center" style="max-width:500px;  width: 90%;">
+                    
+                    <div class="mb-2">
+                    <label for="NombreCuestionario" class="form-label">Nombre del cuestionario</label>
+                    <input type="text" [(ngModel)]="cuestionario.nombre"   class="form-control" id="NombreCuestionario">
+                    </div>
+                    
+                    <div class="mb-2">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <textarea class="form-control" id="descripcion" rows="5" [(ngModel)]="cuestionario.descripcion" 
+                    placeholder="Escribe aquí la descripción del cuestionario..."></textarea>
+                    </div>
+
+                    <div class="mb-2">
+                    <label for="privacidad" class="form-label">Privacidad</label>
+                    <select class="form-select" id="privacidad" [(ngModel)]="cuestionario.privacidad"  aria-label="Seleccionar privacidad del cuestionario">
+                        <option value="Publico">Público</option>
+                        <option value="Privado">Privado</option>
+                    </select>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <button type="button" (click)="siguientePregunta()" class="lila-button mt-3">Siguiente</button>
+        }
+        @else{
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between" style="width: 90%;">
+                <div class="d-flex flex-column m-2">
+                    <label for="tipoPregunta" class="form-label">Tipo de pregunta</label>
+                    <select class="form-select" id="tipoPregunta" [(ngModel)]="preguntas[numeroPregunta].tipo"  aria-label="Seleccionar tipo de pregunta">
+                        <option value="VerdaderoFalso">Verdadero o falso</option>
+                        <option value="RespuestaAbierta">Respuesta Abierta</option>
+                        <option value="OpcionMultiple">Multiples opciones correctas</option>
+                        <option value="OpcionUnica">Única opción correcta</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="tiempo" class="form-label">Tiempo para responder</label>
+                    <input type="number" [(ngModel)]="preguntas[numeroPregunta].tiempo"  class="form-control" id="tiempo" placeholder="Tiempo en segundos">
+                </div>    
+                 
+                <div>
+                    <label for="puntuacion" class="form-label">Puntuación de la pregunta</label>
+                    <input type="number" [(ngModel)]="preguntas[numeroPregunta].puntuacion"  class="form-control" id="puntuacion" placeholder="Número de puntos">
+                </div>
+
+                <div class="d-flex flex-column m-2">
+                    <label for="puntosSegundo" class="form-label">Puntos extra por cada segundo restante</label>
+                    <input type="number" [(ngModel)]="preguntas[numeroPregunta].puntosSegundo"  class="form-control" id="puntosSegundo" placeholder="Número de puntos">
+                </div>
+            </div>
+
+            <div class="p-4 rounded bg-lila mb-3 row shadow text-center" style="max-width:1000px;  width: 90%;">
+                <label for="Pregunta" class="form-label">Pregunta</label>
+                <input type="text" id="Pregunta" class="form-control" [(ngModel)]="preguntas[numeroPregunta].contenido"  placeholder="Contenido de la pregunta">
+            </div>
+            @switch (preguntas[numeroPregunta].tipo) {
+                @case ("VerdaderoFalso") {
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
+                        @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                            @if(respuesta.correcta =="Correcta"){
+                                <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color: #12629b;">
+                                    <div class="form-check position-absolute top-0 end-0 m-2">
+                                        <label for="correcta">
+                                            <i class="bi bi-x-lg"></i>
+                                        </label>
+                                    </div>
+                                    <h4>Respuesta correcta</h4>
+                                    <label for="campoTexto2" class="form-label">Respuesta</label>
+                                    <input type="text" id="campoTexto2" class="form-control" [(ngModel)]="preguntas[numeroPregunta].respuestas[index].contenido"  placeholder="Tu respuesta aquí">
+                                </div> 
+                            }
+                            @else {
+                            <div class="p-4 m-2 rounded shadow text-center position-relative" style="background-color: #c13a3a;">
+                                <div class="form-check position-absolute top-0 end-0 m-2">
+                                    
+                                    <label for="incorrecta">
+                                        <i class="bi bi-x-lg"></i>
+                                    </label>
+                                </div>
+                                <h4>Respuesta incorrecta</h4>
+                                <label for="campoTexto2" class="form-label">Respuesta</label>
+                                <input type="text" id="campoTexto2" class="form-control" [(ngModel)]="preguntas[numeroPregunta].respuestas[index].contenido"  placeholder="Tu respuesta aquí">
+                            </div> 
+                            }
+                        }
+                        
+                    </div>
+                    
+                }
+                @case ("RespuestaAbierta") {
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
+                        @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                            <div class="p-4 m-2 rounded shadow text-center position-relative" [style.background-color]="coloresRespuestas[index]"> 
+                                <label for="campoTexto{{ index }}" class="form-label">Posible respuesta {{ index +1 }}</label>
+                                <input type="text" id="campoTexto{{ index }}" class="form-control" [(ngModel)]="preguntas[numeroPregunta].respuestas[index].contenido"  placeholder="Tu respuesta aquí">
+                            </div>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="p-2 ps-3 pe-3 m-2 rounded shadow text-center position-relative" style="background-color: #12629b;"> 
+                            <a (click)="AgregarRespuesta()"><i class="bi bi-plus-circle fs-1"></i></a>
+                        </div>
+                        <div class="p-2 ps-3 pe-3 m-2 rounded shadow text-center position-relative" style="background-color: #c13a3a;"> 
+                            <a (click)="EliminarRespuesta()"><i class="bi bi-dash-circle fs-1"></i></a>
+                        </div>
+                    </div>
+                    
+                }
+                @case ("OpcionMultiple") {
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
+                        @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                            <div class="p-4 m-2 rounded shadow text-center position-relative" [style.background-color]="coloresRespuestas[index]"> 
+                                <div class="form-check position-absolute top-0 end-0 m-2">
+                                    <input class="form-check-input" type="checkbox" id="correcta{{index}}" 
+                                    [(ngModel)]="respuestasCorrectas[numeroPregunta][index]" name="correcta{{index}}"/>
+                                    <label for="correcta{{index}}">
+                                        <i class="bi bi-check-lg"></i>
+                                    </label>
+                                </div>
+
+                                <label for="campoTexto{{ index }}" class="form-label">Posible respuesta {{ index +1 }}</label>
+                                <input type="text" id="campoTexto{{ index }}" class="form-control" [(ngModel)]="preguntas[numeroPregunta].respuestas[index].contenido"  placeholder="Tu respuesta aquí">
+                            </div>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="p-2 ps-3 pe-3 m-2 rounded shadow text-center position-relative" style="background-color: #12629b;"> 
+                            <a (click)="AgregarRespuesta()"><i class="bi bi-plus-circle fs-1"></i></a>
+                        </div>
+                        <div class="p-2 ps-3 pe-3 m-2 rounded shadow text-center position-relative" style="background-color: #c13a3a;"> 
+                            <a (click)="EliminarRespuesta()"><i class="bi bi-dash-circle fs-1"></i></a>
+                        </div>
+                    </div>
+                    
+                }
+                @case ("OpcionUnica") {
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-evenly">
+                        @for(respuesta of preguntas[numeroPregunta].respuestas; track respuesta; let index=$index){
+                            <div class="p-4 m-2 rounded shadow text-center position-relative" [style.background-color]="coloresRespuestas[index]"> 
+                                <div class="form-check position-absolute top-0 end-0 m-2">
+                                    <input class="form-check-input" type="radio"  id="correctaUnica{{index}}" name="correcta" 
+                                    [value]=index [(ngModel)]="respuestaCorrecta"/>
+                                    <label for="correctaUnica{{index}}">
+                                        <i class="bi bi-check-lg"></i>
+                                    </label>
+                                </div>
+                                <label for="campoTexto{{ index }}" class="form-label">Respuesta {{ index +1 }}</label>
+                                <input type="text" id="campoTexto{{ index }}" class="form-control" [(ngModel)]="preguntas[numeroPregunta].respuestas[index].contenido"  placeholder="Tu respuesta aquí">
+                            </div>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="p-2 ps-3 pe-3 m-2 rounded shadow text-center position-relative" style="background-color: #12629b;"> 
+                            <a (click)="AgregarRespuesta()"><i class="bi bi-plus-circle fs-1"></i></a>
+                        </div>
+                        <div class="p-2 ps-3 pe-3 m-2 rounded shadow text-center position-relative" style="background-color: #c13a3a;"> 
+                            <a (click)="EliminarRespuesta()"><i class="bi bi-dash-circle fs-1"></i></a>
+                        </div>
+                    </div>
+                    
+                }
+            }
+            <div class="d-flex align-items-center">
+                <button type="button" (click)="atras()" class="lila-button me-2"><i class="bi bi-arrow-left me-2"></i>Atras</button>
+                @if(numeroPregunta !== preguntas.length-1){
+                    <button type="button" (click)="siguientePregunta()" class="lila-button">Siguiente pregunta<i class="bi bi-arrow-right ms-2"></i></button>
+                }
+                
+            </div>
+        }
+        
+    </div>
+</div>
+

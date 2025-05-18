@@ -11,6 +11,16 @@ export class CuestionarioController {
             res.status(error.code || 500).json({Error: error.message})
         }
     }
+    static async Modificar(req, res) {
+        const inputData = req.body
+        const token = req.cookies.access_token
+        try {
+            await CuestionarioModel.Modificar({inputData},token)
+            res.status(201).json({Mensaje: "Cuestionario modificado"})
+        } catch (error) {
+            res.status(error.code || 500).json({Error: error.message})
+        }
+    }
 
     static async ListarPublicos(req, res) {
         try {

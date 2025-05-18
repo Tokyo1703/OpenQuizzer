@@ -1,10 +1,14 @@
 <div class="d-flex justify-content-center align-items-center pt-4 mb-4" style="height: 100%;">
     <div class="d-flex flex-column align-items-center justify-content-center justify-content-lg-between" style="max-width: 1200px; width: 90%;">
-        <div class="p-4 m-2 bg-green rounded shadow d-flex flex-wrap justify-content-center align-items-center justify-content-lg-evenly text-center"
-        style="max-width: 1200px; width: 90%;">
-            <h5>{{resultadoIndividual.fecha}}</h5>
-            <h2>{{cuestionario.nombre}}</h2>
-            <h5>{{resultadoIndividual.hora}}</h5>
+        <div class="p-4 m-2 bg-green rounded shadow d-flex flex-column align-items-center justify-content-center text-center"
+         style="max-width: 1200px; width: 90%;">
+            <div class="d-flex flex-wrap justify-content-center align-items-center justify-content-lg-evenly text-center"
+            style="max-width:1000px;  width: 90%;">
+                <h5>{{resultadoIndividual.fecha}}</h5>
+                <h2>{{cuestionario.nombre}}</h2>
+                <h5>{{resultadoIndividual.hora}}</h5>
+            </div>
+            <h4>{{resultadoIndividual.puntuacionFinal}} puntos</h4> 
         </div>
         @for(preguntaContestada of preguntasContestadas; track preguntaContestada; let index=$index){
             @if(preguntaContestada.puntuacion>0){
@@ -14,6 +18,7 @@
                         <h3>{{preguntaContestada.pregunta.contenido}}</h3>
                     </div>
                     <h4 class="m-2">Correcta</h4>
+                    <h4 class="m-2">{{preguntaContestada.puntuacion}} puntos</h4>
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
                         <div class="p-4 m-2 rounded shadow text-center bg-green"> 
                             <h4>Tu respuesta</h4>

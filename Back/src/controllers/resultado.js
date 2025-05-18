@@ -23,6 +23,16 @@ export class ResultadoController {
         }
     }
 
+    static async GetListaResultadoGrupal(req, res) {
+        try {
+            const token = req.cookies.access_token
+            const {resultados, cuestionarios} = await ResultadoModel.GetListaResultadoGrupal(token)
+            res.status(200).json({Mensaje:"Lista de resultados obtenidos", resultados, cuestionarios})
+        } catch (error) {
+            res.status(error.code || 500).json({ Error: error.message })
+        }
+    }
+
     static async GetResultadoIndividual(req, res) {
         const inputData = req.params
 
@@ -30,6 +40,30 @@ export class ResultadoController {
             const token = req.cookies.access_token
             const{resultado, cuestionario, preguntasContestadas} = await ResultadoModel.GetResultadoIndividual({inputData}, token)
             res.status(200).json({ Mensaje: "Resultado obtenido", resultado, cuestionario, preguntasContestadas })
+        } catch (error) {
+            res.status(error.code || 500).json({ Error: error.message })
+        }
+    }
+
+    static async GetResultadoGrupal(req, res) {
+        const inputData = req.params
+
+        try {
+            const token = req.cookies.access_token
+            const {resultado, cuestionario} = await ResultadoModel.getResultadoGrupal({inputData}, token)
+            res.status(200).json({ Mensaje: "Resultado obtenido", resultado, cuestionario })
+        } catch (error) {
+            res.status(error.code || 500).json({ Error: error.message })
+        }
+    }
+
+    static async GetRanking(req, res) {
+        const inputData = req.params
+
+        try {
+            const token = req.cookies.access_token
+            const ranking = await ResultadoModel.getRanking({inputData}, token)
+            res.status(200).json({ Mensaje: "Ranking obtenido", ranking })
         } catch (error) {
             res.status(error.code || 500).json({ Error: error.message })
         }

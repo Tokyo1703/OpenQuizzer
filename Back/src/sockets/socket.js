@@ -63,6 +63,10 @@ export default function socketHandler(io) {
             io.to(codigoSesion).emit('escucharFinalCuestionario', {resultadoGrupal:resultadoGrupal});
         })
 
+        socket.on('enviarRanking', (codigoSesion, ranking) => {
+            io.to(codigoSesion).emit('recibirRanking', {ranking: ranking});
+        })
+        
         socket.on('cerrarSesion', ( codigoSesion) => {
             sesionesActivas = sesionesActivas.filter(s => s.codigo !== codigoSesion);
             io.to(codigoSesion).emit('sesionCerrada');

@@ -1,10 +1,6 @@
 <div class="d-flex flex-column align-items-center pt-5 pb-4">
-    @if(rol=="Creador"){
-        <h1 class="fw-bold">Mis resultados individuales</h1>
-    }
-    @if(rol=="Participante"){
-        <h1 class="fw-bold">Mis resultados</h1>
-    }
+
+    <h1 class="fw-bold">Resultados grupales</h1>
     
     @for(resultado of listaResultados; track resultado; let index = $index){
         <div class="p-4 m-2 rounded shadow d-flex flex-column align-items-start justify-content-lg-between" 
@@ -18,17 +14,13 @@
             </div>
             <p> {{resultado.cuestionario.descripcion}}</p>
             <div class="d-flex flex-wrap justify-content-center justify-content-lg-between w-100">
-            @if (rol=="Creador") {
-                <button class= "green-button" [routerLink]="['/homeCreador/resultadoIndividualCompleto', resultado.idIndividual]">
-                    Ver resultado completo
-                </button>
-            }
-            @else {
-                <button class= "green-button" [routerLink]="['/homeParticipante/resultadoIndividualCompleto', resultado.idIndividual]">
-                    Ver resultado completo
-                </button>
-            }
-            <h5 class="text-center">Puntuación: {{resultado.puntuacionFinal}}</h5>
+            
+            <button class= "green-button" [routerLink]="['/homeCreador/resultadoGrupalCompleto', resultado.idGrupal]">
+                Ver resultado completo
+            </button>
+            
+
+            <h5 class="text-center">{{resultado.numeroParticipantes}} participantes</h5>
             </div>
         </div>
     } 

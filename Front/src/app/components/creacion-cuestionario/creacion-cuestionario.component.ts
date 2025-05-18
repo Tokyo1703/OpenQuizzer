@@ -6,7 +6,6 @@ import { Pregunta, Respuesta } from '../../interfaces/pregunta';
 import { CuestionarioService } from '../../services/cuestionario/cuestionario.service';
 import { RouterModule } from '@angular/router';
 import { Usuario } from '../../interfaces/usuario';
-import e from 'express';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
@@ -44,8 +43,8 @@ export class CreacionCuestionarioComponent {
     puntuacion: 100,
     puntosSegundo: 1,
     respuestas: [
-      { contenido: "", correcta: "Falsa" }, 
-      { contenido: "", correcta: "Falsa" }
+      {idRespuesta: 0, contenido: "", correcta: "Falsa" }, 
+      {idRespuesta: 0, contenido: "", correcta: "Falsa" }
     ]
   }
   
@@ -144,8 +143,8 @@ export class CreacionCuestionarioComponent {
     this.respuestaCorrecta = -1
     this.respuestasCorrectas = [false,false]
     this.nuevaPregunta.respuestas= [
-      { contenido: "", correcta: "Falsa" }, 
-      { contenido: "", correcta: "Falsa" }
+      {idRespuesta: 0, contenido: "", correcta: "Falsa" }, 
+      {idRespuesta: 0, contenido: "", correcta: "Falsa" }
     ]
     this.coloresRespuestas = [this.colorAleatorio(), this.colorAleatorio()]
 
@@ -177,7 +176,7 @@ export class CreacionCuestionarioComponent {
   }
 
   AgregarRespuesta() {
-    this.nuevaPregunta.respuestas.push({ contenido: "", correcta: "Falsa" })
+    this.nuevaPregunta.respuestas.push({idRespuesta: 0, contenido: "", correcta: "Falsa" })
     this.coloresRespuestas.push(this.colorAleatorio())
     this.respuestasCorrectas.push(false)
   }

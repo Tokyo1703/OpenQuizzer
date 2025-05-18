@@ -4,7 +4,7 @@ import { CuestionarioService } from '../../services/cuestionario/cuestionario.se
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Cuestionario } from '../../interfaces/cuestionario';
-import { PreguntaRecibidadBackend, PreguntaContestada } from '../../interfaces/pregunta';
+import { PreguntaRecibidaBackend, PreguntaContestada } from '../../interfaces/pregunta';
 import { ResultadoGrupal, ResultadoIndividual } from '../../interfaces/resultado';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 import { ResultadoService } from '../../services/resultado/resultado.service';
@@ -26,7 +26,7 @@ export class SesionCuestionarioComponent implements OnInit {
     descripcion: '',
     privacidad: ''
   }
-  preguntas: PreguntaRecibidadBackend[] = []
+  preguntas: PreguntaRecibidaBackend[] = []
   preguntasContestadas: PreguntaContestada[] = []
   nuevaPreguntaContestada: PreguntaContestada = {
     idPregunta: -1,
@@ -43,12 +43,12 @@ export class SesionCuestionarioComponent implements OnInit {
   }
   idResultadoIndividual: number = 0
   resultadoGrupal: ResultadoGrupal = {
-    idResultadoGrupal: -1,
+    idGrupal: -1,
     idCuestionario: -1,
     fecha: '',
     hora: ''
   }
-  
+  ranking: ResultadoIndividual[] = [];
 
   numeroParticipantes: number = 0;
   numeroPregunta:number=-1;
@@ -245,9 +245,18 @@ export class SesionCuestionarioComponent implements OnInit {
     this.resultadoService.guardarResultadoCuestionarioIndividual(this.resultadoIndividual,this.preguntasContestadas).subscribe({
       next: (res) => {
         this.idResultadoIndividual = res.idResultado
-        this.resultadoService.guardarGrupalIndividual(this.resultadoGrupal.idResultadoGrupal, this.idResultadoIndividual).subscribe({
+        this.resultadoService.guardarGrupalIndividual(this.resultadoGrupal.idGrupal, this.idResultadoIndividual).subscribe({
           next: (res) => {
-            this.paso="ResultadoFinal"
+            this.socketService.enviarRespuesta(this.codigoSesion)
+            this.socketService.onceEscucharRanking().subscribe({
+              next: (data) => {
+                this.ranking = data.ranking
+                this.paso="ResultadoFinal"
+              },
+              error: (e) => {
+                this.toastr.error('Error', e.message, {timeOut: 8000, closeButton: true});
+              }
+            })
           },
           error: (e) => {
             this.toastr.error('Error', e.message, {timeOut: 8000, closeButton: true});

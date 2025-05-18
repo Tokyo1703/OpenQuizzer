@@ -10,9 +10,14 @@ export interface ResultadoIndividualRecibido extends ResultadoIndividual{
 
 }
 export interface ResultadoGrupal{
-    idResultadoGrupal: number,
+    idGrupal: number,
     idCuestionario: number,
     fecha:string,
     hora:string
 }
+
+export interface ResultadoGrupalRecibido extends ResultadoGrupal{
+    numeroParticipantes: number
+}
+
 

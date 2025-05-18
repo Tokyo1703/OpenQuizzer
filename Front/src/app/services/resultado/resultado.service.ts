@@ -41,6 +41,15 @@ export class ResultadoService {
     )
   }
 
+  getResultadosGrupales(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/resultados/getResultadosGrupales/`, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al obtener los resultados';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
   getResultadosIndividuales(): Observable<any> {
     return this.http.get(`${this.apiUrl}/resultados/getResultadosIndividuales/`, {withCredentials: true}).pipe(
       catchError(error => {
@@ -50,8 +59,27 @@ export class ResultadoService {
     )
   }
 
+
   getResultadoIndividual(idResultado: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/resultados/getResultadoIndividual/${idResultado}`, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al obtener el resultado';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
+  getResultadoGrupal(idResultado: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/resultados/getResultadoGrupal/${idResultado}`, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al obtener el resultado';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
+  getRanking(idResultado: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/resultados/getRanking/${idResultado}`, {withCredentials: true}).pipe(
       catchError(error => {
         const mensajeError= error.error?.Error || 'Error desconocido al obtener el resultado';
         return throwError(() => new Error(mensajeError))

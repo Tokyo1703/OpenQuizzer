@@ -112,6 +112,19 @@ export class SocketService {
     });
   }
 
+  enviarRanking(codigoSesion: number, ranking: any) {
+    this.socket.emit('enviarRanking', codigoSesion, ranking);
+  }
+
+  onceEscucharRanking(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.once('recibirRanking', (data) => {
+        observer.next(data);
+        observer.complete();
+      });
+    });
+  }
+
   cerrarSesion(codigoSesion: number) {
     this.socket.emit('cerrarSesion', codigoSesion);
   }

@@ -5,7 +5,7 @@ import { Cuestionario } from '../../interfaces/cuestionario';
 import { ResultadoService } from '../../services/resultado/resultado.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { PreguntaContestada, PreguntaContestadaCompleta, PreguntaRecibidadBackend } from '../../interfaces/pregunta';
+import { PreguntaContestadaCompleta} from '../../interfaces/pregunta';
 import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({

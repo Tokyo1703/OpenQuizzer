@@ -121,6 +121,20 @@
         <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-between justify-content-lg-between position-relative"
         style="max-width: 1200px; width: 90%; min-height: 600px;">
             <h2>Resultados</h2>
+            <ol class="list-group list-group-numbered" style="max-width: 1200px; width: 90%;">        
+            @for(participante of ranking; track participante; let index=$index){
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"> {{participante.nombreUsuario}}</div>
+                    </div>
+                    
+                    <div class="p-2 m-2 rounded shadow text-center bg-lila">
+                        {{participante.puntuacionFinal}} puntos
+                    </div>               
+                </li>
+            }
+            </ol>
+        
             <button class="lila-button" (click)="cerrarSesion()">Salir</button>
         </div>
     }

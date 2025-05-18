@@ -2,11 +2,11 @@ import { Component, OnInit} from '@angular/core';
 import { CuestionarioService } from '../../services/cuestionario/cuestionario.service';
 import { Cuestionario } from '../../interfaces/cuestionario';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-lista-cuestionarios-creador',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './lista-cuestionarios-creador.component.html',
   styleUrl: './lista-cuestionarios-creador.component.css'
 })

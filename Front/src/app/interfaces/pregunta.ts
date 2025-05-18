@@ -1,4 +1,5 @@
 export interface Respuesta {
+    idRespuesta: number
     contenido: string
     correcta: string
 }
@@ -11,7 +12,7 @@ export interface Pregunta {
     puntosSegundo: number
     respuestas: Respuesta[]
 }
-export interface PreguntaRecibidadBackend extends Pregunta {
+export interface PreguntaRecibidaBackend extends Pregunta {
     idPregunta: number;
   }
 
@@ -23,5 +24,5 @@ export interface PreguntaContestada{
 }
 
 export interface PreguntaContestadaCompleta extends PreguntaContestada{
-    pregunta: PreguntaRecibidadBackend
+    pregunta: PreguntaRecibidaBackend
 }

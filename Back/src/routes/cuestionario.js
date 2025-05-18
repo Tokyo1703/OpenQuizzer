@@ -13,5 +13,6 @@ CuestionarioRouter.use(Autenticacion(["Creador"]))
 CuestionarioRouter.get('/completo/:id', CuestionarioController.Completo)
 CuestionarioRouter.get('/misCuestionarios', CuestionarioController.ListarMisCuestionarios)
 CuestionarioRouter.post('/crear', CuestionarioController.Create)
+CuestionarioRouter.put('/modificar', CuestionarioController.Modificar)
 
 export default CuestionarioRouter;

@@ -4,8 +4,8 @@ import { CuestionarioService } from '../../services/cuestionario/cuestionario.se
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Cuestionario } from '../../interfaces/cuestionario';
-import { PreguntaRecibidadBackend } from '../../interfaces/pregunta';
-import { ResultadoGrupal } from '../../interfaces/resultado';
+import { PreguntaRecibidaBackend } from '../../interfaces/pregunta';
+import { ResultadoGrupal, ResultadoIndividual } from '../../interfaces/resultado';
 import { ResultadoService } from '../../services/resultado/resultado.service';
 
 @Component({
@@ -31,13 +31,14 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
     descripcion: '',
     privacidad: ''
   }
-  preguntas: PreguntaRecibidadBackend[] = []
+  preguntas: PreguntaRecibidaBackend[] = []
   resultadoGrupal: ResultadoGrupal = {
-    idResultadoGrupal: -1,
+    idGrupal: -1,
     idCuestionario: -1,
     fecha: '',
     hora: ''
   }
+  ranking: ResultadoIndividual[] = [];
   
 
   constructor(private socketService: SocketService, private route: ActivatedRoute, private router: Router,
@@ -51,10 +52,6 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
 
     this.obtenerCuestionario();
 
-    
-
-    
-    
     this.socketService.onActualizarParticipantes().subscribe(data => {
       this.numeroParticipantes = data.numeroParticipantes;
       this.participantes = data.participantes;
@@ -140,14 +137,14 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
 
   finalCuestionario(){
     this.resultadoGrupal = {
-      idResultadoGrupal: -1,
+      idGrupal: -1,
       idCuestionario: this.cuestionario.idCuestionario,
       fecha: new Date().toISOString().slice(0, 10),
       hora: new Date().toTimeString().slice(0, 8)
     }
     this.resultadoService.guardarResultadoGrupal(this.resultadoGrupal).subscribe({
       next: (res) => {
-        this.resultadoGrupal.idResultadoGrupal = res.idResultado
+        this.resultadoGrupal.idGrupal = res.idResultado
         this.toastr.success('Resultados guardados correctamente', 'Correcto', {timeOut: 8000, closeButton: true})
         this.socketService.finalizarCuestionario(this.codigo, this.resultadoGrupal)
       }
@@ -155,8 +152,20 @@ export class SesionCuestionarioCreadorComponent implements OnInit {
         this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
       }
     })
+    this.socketService.onceEscucharRespuestas().subscribe(() => {
+      this.resultadoService.getRanking(this.resultadoGrupal.idGrupal).subscribe({
+      next: (res) => {
+        this.ranking = res.ranking;
+        this.socketService.enviarRanking(this.codigo, this.ranking)
+        this.paso="FinalCuestionario"
+      },
+      error: (e) => {
+        this.toastr.error(e.message, 'Error', { timeOut: 8000, closeButton: true })
+      }
+    })
+      
+    })
     
-    this.paso="FinalCuestionario"
   }
 
   cerrarSesion(){

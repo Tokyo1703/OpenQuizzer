@@ -14,6 +14,9 @@ import { ListaCuestionariosCreadorComponent } from './components/lista-cuestiona
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { SesionCuestionarioComponent } from './components/sesion-cuestionario/sesion-cuestionario.component';
 import { SesionCuestionarioCreadorComponent } from './components/sesion-cuestionario-creador/sesion-cuestionario-creador.component';
+import { ListaResultadosGrupalesComponent } from './components/lista-resultados-grupales/lista-resultados-grupales.component';
+import { ResultadoGrupalCompletoComponent } from './components/resultado-grupal-completo/resultado-grupal-completo.component';
+import { EditarCuestionarioComponent } from './components/editar-cuestionario/editar-cuestionario.component';
 
 export const routes: Routes = [
     {path: '', component: AppComponent},
@@ -31,11 +34,14 @@ export const routes: Routes = [
         children: [
             {path: '', redirectTo: 'publicos', pathMatch: 'full' },
             {path: 'crearCuestionario', component: CreacionCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
+            {path: 'modificarCuestionario/:id', component: EditarCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'cuestionariosCreados', component: ListaCuestionariosCreadorComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuard]},
-            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]}
+            {path: 'resultadosGrupales', component: ListaResultadosGrupalesComponent, canActivate: [autenticacionGuardCreador]},
+            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]},
+            {path: 'resultadoGrupalCompleto/:id', component: ResultadoGrupalCompletoComponent, canActivate: [autenticacionGuardCreador]},
         ]
     },
     {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuard]},

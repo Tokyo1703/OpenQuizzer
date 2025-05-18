@@ -21,6 +21,15 @@ export class CuestionarioService {
     )
   }
 
+  modificarCuestionario(cuestionario: any, preguntas: any[] ): Observable<any> {
+    return this.http.put(`${this.apiUrl}/cuestionarios/modificar` , {cuestionario, preguntas}, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al modificar el cuestionario';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
   getCuestionariosPublicos(): Observable<any>  {
     return this.http.get(`${this.apiUrl}/cuestionarios/publicos`).pipe(
       catchError(error => {

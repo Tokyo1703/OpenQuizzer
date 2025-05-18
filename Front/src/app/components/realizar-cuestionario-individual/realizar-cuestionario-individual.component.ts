@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CuestionarioService } from '../../services/cuestionario/cuestionario.service';
 import { Usuario } from '../../interfaces/usuario';
 import { Cuestionario } from '../../interfaces/cuestionario';
-import { PreguntaContestada, PreguntaRecibidadBackend} from '../../interfaces/pregunta';
+import { PreguntaContestada, PreguntaRecibidaBackend} from '../../interfaces/pregunta';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { ResultadoIndividual } from '../../interfaces/resultado';
@@ -46,7 +46,7 @@ export class RealizarCuestionarioIndividualComponent {
     puntuacion: 0
   }
 
-  preguntas: PreguntaRecibidadBackend[] = []
+  preguntas: PreguntaRecibidaBackend[] = []
   preguntasContestadas: PreguntaContestada[] = []
   numeroPregunta: number = 0
 
