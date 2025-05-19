@@ -33,10 +33,11 @@
 </nav>
 
 <div class="bg-light-green min-vh-100 w-100" style="margin-top: 65px;">
-    <router-outlet></router-outlet>
-    @if(Mostrar("/")){
+    
+    @if(!Mostrar("/")){
+        <router-outlet></router-outlet>
         
-        <app-lista-cuestionarios></app-lista-cuestionarios>
         
     }
+    @else{<app-lista-cuestionarios></app-lista-cuestionarios>}
 </div>

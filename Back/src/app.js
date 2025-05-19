@@ -1,3 +1,7 @@
+/*
+    OpenQuizzer  © 2025 by Carla Bravo Maestre is licensed under CC BY 4.0.
+    To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
+*/
 import express, { json } from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'

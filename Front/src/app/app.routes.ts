@@ -24,7 +24,7 @@ export const routes: Routes = [
     {path: 'registro', component: RegistroComponent},
     {path: 'homeParticipante', component: HomeParticipanteComponent, canActivate: [autenticacionGuardParticipante],
         children: [
-            {path: '', redirectTo: 'publicos', pathMatch: 'full' },
+            {path: '', redirectTo: '/homeParticipante/publicos', pathMatch: 'full' },
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardParticipante]},
             {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuard]},
             {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]}
@@ -32,7 +32,7 @@ export const routes: Routes = [
     },
     {path: 'homeCreador', component: HomeCreadorComponent, canActivate: [autenticacionGuardCreador],
         children: [
-            {path: '', redirectTo: 'publicos', pathMatch: 'full' },
+            {path: '', redirectTo: '/homeCreador/publicos', pathMatch: 'full' },
             {path: 'crearCuestionario', component: CreacionCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'modificarCuestionario/:id', component: EditarCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent, canActivate: [autenticacionGuardCreador]},
