@@ -19,32 +19,41 @@ import { ResultadoGrupalCompletoComponent } from './components/resultado-grupal-
 import { EditarCuestionarioComponent } from './components/editar-cuestionario/editar-cuestionario.component';
 
 export const routes: Routes = [
-    {path: '', component: AppComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'registro', component: RegistroComponent},
+    {
+    path: '',
+    component: AppComponent,
+    canActivate: [ autenticacionGuard ],     // <- solo deja pasar aquí a NO autenticados
+    children: [
+      { path: '', component: ListaCuestionariosComponent },  // landing público
+      { path: 'login', component: LoginComponent },
+      { path: 'registro', component: RegistroComponent },
+    ]
+    },
     {path: 'homeParticipante', component: HomeParticipanteComponent, canActivate: [autenticacionGuardParticipante],
         children: [
-            {path: '', redirectTo: '/homeParticipante/publicos', pathMatch: 'full' },
+            {path: '', redirectTo: 'publicos', pathMatch: 'full' },
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardParticipante]},
-            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuard]},
-            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]}
+            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuardParticipante]},
+            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardParticipante]},
+            {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuardParticipante]},
             ]
     },
     {path: 'homeCreador', component: HomeCreadorComponent, canActivate: [autenticacionGuardCreador],
         children: [
-            {path: '', redirectTo: '/homeCreador/publicos', pathMatch: 'full' },
+            {path: '', redirectTo: 'publicos', pathMatch: 'full' },
             {path: 'crearCuestionario', component: CreacionCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'modificarCuestionario/:id', component: EditarCuestionarioComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'publicos', component: ListaCuestionariosComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'cuestionariosCreados', component: ListaCuestionariosCreadorComponent, canActivate: [autenticacionGuardCreador]},
-            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuard]},
+            {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadosGrupales', component: ListaResultadosGrupalesComponent, canActivate: [autenticacionGuardCreador]},
-            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuard]},
+            {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadoGrupalCompleto/:id', component: ResultadoGrupalCompletoComponent, canActivate: [autenticacionGuardCreador]},
+            {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuardCreador]},
         ]
     },
-    {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuard]},
+    
     {path: 'sesionCuestionarioCreador/:id', component: SesionCuestionarioCreadorComponent, canActivate: [autenticacionGuardCreador]},
     {path: 'sesionCuestionario/:codigo', component: SesionCuestionarioComponent},
     {path: 'realizarCuestionarioIndividual/:id', component: RealizarCuestionarioIndividualComponent},

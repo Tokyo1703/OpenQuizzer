@@ -24,7 +24,20 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent implements OnInit {
   codigoSesion: string="";
 
-  constructor(private router:Router, private usuarioService: UsuarioService, private socketService: SocketService, private toastr: ToastrService) {}
+  constructor(private router:Router, private usuarioService: UsuarioService, private socketService: SocketService, private toastr: ToastrService) {
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        if (res.perfil.rol == 'Creador') {
+          this.router.navigate(['/homeCreador']);
+        } else if (res.perfil.rol == 'Participante') {
+          this.router.navigate(['/homeParticipante']);
+        }
+      },
+      error: () => {
+        this.router.navigate(['/']);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.usuarioService.getPerfil().subscribe({
@@ -36,7 +49,6 @@ export class AppComponent implements OnInit {
         }
       },
       error: () => {
-        
         this.router.navigate(['/']);
       }
     });

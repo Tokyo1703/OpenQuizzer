@@ -1,6 +1,6 @@
 <nav class="navbar bg-lila fixed-top ">
     <div class="container-fluid d-flex justify-content-between">
-        <a class="navbar-brand d-flex align-items-center m-0" href="#">
+        <a class="navbar-brand d-flex align-items-center m-0" [routerLink]="['']">
             <img src="img/Logo.png" alt="Logo" width="40" class="d-inline-block" >
             <span class="ms-4 text-white fw-bold d-none d-none d-sm-block" >OpenQuizzer</span>
         </a>
@@ -33,11 +33,7 @@
 </nav>
 
 <div class="bg-light-green min-vh-100 w-100" style="margin-top: 65px;">
+    <router-outlet></router-outlet>
     
-    @if(!Mostrar("/")){
-        <router-outlet></router-outlet>
-        
-        
-    }
-    @else{<app-lista-cuestionarios></app-lista-cuestionarios>}
+    
 </div>

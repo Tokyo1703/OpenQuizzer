@@ -11,8 +11,20 @@ export const autenticacionGuard: CanActivateFn = () => {
   const router = inject(Router);
   
   return usuarioService.getPerfil().pipe(
-    map(() => true),
-    catchError(() => of(false))
+     map(res => {
+        if (res.perfil.rol === 'Creador') {
+          router.navigate(['/homeCreador']);
+          return false;
+        }
+        if (res.perfil.rol === 'Participante') {
+          router.navigate(['/homeParticipante']);
+          return false;
+        }
+        return true;  // no autenticado → deja entrar
+      }),
+      catchError(() => {
+        return of(true); // error (no token) → deja entrar
+      })
   )
 
 }

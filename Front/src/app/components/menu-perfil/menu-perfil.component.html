@@ -12,7 +12,15 @@
           <a class="nav-link active"  [routerLink]="['']">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" [routerLink]="['/perfil']">Ver perfil</a>
+          @if (perfil.rol == 'Creador'){ 
+            <a class="nav-link active" [routerLink]="['/homeCreador/perfil']">Ver perfil</a>
+          }
+          @else if(perfil.rol == 'Participante'){
+            <a class="nav-link active" [routerLink]="['/homeParticipante/perfil']">Ver perfil</a>
+          }
+          
+          
+          
         <li class="nav-item">
           <a class="nav-link active"  (click)="cerrarSesion()">Cerrar Sesión</a>
         </li>
