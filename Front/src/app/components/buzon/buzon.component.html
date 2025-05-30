@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center align-items-center pt-5 mb-4">
+
+    <div class="p-4 bg-lila rounded shadow d-flex flex-column align-items-center">
+
+        
+        <h3>Contactar</h3>
+        
+            <div class="mt-1 mb-2">
+                <label for="nombreCompleto" class="form-label">Nombre y apellidos</label>
+                <input type="text" [(ngModel)]="nombreCompleto"   class="form-control" id="nombreCompleto">
+            </div>
+            <div class="mb-2">
+                <label for="CorreoElectronico" class="form-label">Correo electrónico</label>
+                <input type="email" [(ngModel)]="correo" class="form-control" id="CorreoElectronico" >
+            </div>
+            <div class="mb-2">
+                <label for="contenido" class="form-label">Descripcion</label>
+                <textarea class="form-control" id="contenido" rows="5" [(ngModel)]="contenido" 
+                placeholder="Introduzca aquí un error, sugerencia o cualquier tipo de infromación que quiera comunicar"></textarea>
+            </div>
+            
+        
+        <button type="button" (click)="Enviar()" class="green-button mt-3">Enviar</button>
+
+    </div>
+</div>

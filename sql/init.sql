@@ -14,6 +14,7 @@ drop table if exists respuesta;
 drop table if exists pregunta;
 drop table if exists cuestionario;
 drop table if exists usuario;
+drop table if exists sugerencia;
 
 create table if not exists usuario(
 	nombreUsuario varchar(64) primary key,
@@ -95,4 +96,11 @@ create table if not exists preguntaContestada(
     puntuacion int not null,
     constraint fk_ContestadaIndividual foreign key (idIndividual) references resultadoIndividual(idIndividual),
     constraint fk_ContestadaPregunta foreign key (idPregunta) references pregunta(idPregunta)
+);
+
+create table if not exists sugerencia(
+    idSugerencia int auto_increment primary key,
+    nombreCompleto varchar(128) not null,
+    correo varchar(255) not null,
+    contenido varchar(255) not null
 );

@@ -3,11 +3,11 @@
     <div class="p-4 bg-green rounded shadow d-flex flex-column align-items-center justify-content-lg-between" style="max-width: 1200px; width: 90%; min-height: 600px;">
 
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-between mb-3 " style="width: 90%;">
-            <button type="button" class="lila-button m-2" routerLink="/homeCreador">
+            <button type="button" class="lila-button m-2" [routerLink]="['/homeCreador/cuestionariosCreados']">
                 <i class="bi bi-x-circle me-1"></i>
                 Cancelar
             </button>
-            <h3 class="text-center">Nuevo Cuestionario</h3>
+            <h3 class="text-center">Edición Cuestionario</h3>
             <button type="button" class="lila-button m-2" (click)="Guardar()">
                 Guardar
                 <i class="bi bi-floppy ms-1"></i>

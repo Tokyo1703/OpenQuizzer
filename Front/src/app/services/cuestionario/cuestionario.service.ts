@@ -21,6 +21,15 @@ export class CuestionarioService {
     )
   }
 
+  borrarCuestionario(idCuestionario: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/cuestionarios/borrar/${idCuestionario}`, {withCredentials: true}).pipe(
+      catchError(error => {
+        const mensajeError= error.error?.Error || 'Error desconocido al borrar el cuestionario';
+        return throwError(() => new Error(mensajeError))
+      })
+    )
+  }
+
   modificarCuestionario(cuestionario: any, preguntas: any[] ): Observable<any> {
     return this.http.put(`${this.apiUrl}/cuestionarios/modificar` , {cuestionario, preguntas}, {withCredentials: true}).pipe(
       catchError(error => {

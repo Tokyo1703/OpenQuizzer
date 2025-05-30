@@ -33,6 +33,17 @@ export class ListaCuestionariosCreadorComponent implements OnInit {
 
   IniciarCuestionario(idCuestionario:number){
     this.router.navigate(['/sesionCuestionarioCreador', idCuestionario])
-    
+  }
+
+  BorrarCuestionario(idCuestionario: number){
+    this.cuestionarioService.borrarCuestionario(idCuestionario).subscribe({
+      next: (res) => {
+        this.toastr.success("Cuestionario borrado correctamente", 'Correcto', {timeOut: 8000, closeButton: true})
+        this.getListaCuestionarios()
+      },
+      error: (e) => {
+        this.toastr.error(e.message, 'Error', {timeOut: 8000, closeButton: true})
+      }
+    })
   }
 }

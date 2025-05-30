@@ -156,6 +156,18 @@ export class CreacionCuestionarioComponent {
   }
 
   Guardar(){
+    if(this.nombreCuestionario == "") {
+      this.toastr.error('Error', 'Por favor el campo de Nombre es obligatorio', {timeOut: 8000, closeButton: true});
+      return;
+    }
+    if(this.privacidad== "") {
+      this.toastr.error('Error', 'Por favor seleccione la privacidad del cuestionario', {timeOut: 8000, closeButton: true});
+      return;
+    }
+    if(this.preguntas.length < 1) {
+      this.toastr.error('Error', 'Debe haber al menos una pregunta creada, haga click en "Siguiente"', {timeOut: 8000, closeButton: true});
+      return;
+    }
 
     const cuestionario = {
       nombreUsuario: this.perfil.nombreUsuario,

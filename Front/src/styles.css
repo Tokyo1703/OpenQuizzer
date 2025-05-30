@@ -13,6 +13,14 @@
   background-color: #cbfbe0;
 }
 
+.my-button {
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
 .green-button {
   background-color: #4fc984;
   color: white;

@@ -1,6 +1,5 @@
 import connection from '../connection_db/connection.js'
 import bcrypt from 'bcrypt'
-import e from 'express'
 import jwt from 'jsonwebtoken'
 
 export class UsuarioModel {

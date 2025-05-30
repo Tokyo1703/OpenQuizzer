@@ -1,9 +1,9 @@
 <div class="d-flex flex-column align-items-center pt-5 pb-4">
     @if(rol=="Creador"){
-        <h1 class="fw-bold">Mis resultados individuales</h1>
+        <h1 class="fw-bold text-center">Mis resultados individuales</h1>
     }
     @if(rol=="Participante"){
-        <h1 class="fw-bold">Mis resultados</h1>
+        <h1 class="fw-bold text-center">Mis resultados</h1>
     }
     
     @for(resultado of listaResultados; track resultado; let index = $index){
@@ -28,7 +28,7 @@
                     Ver resultado completo
                 </button>
             }
-            <h5 class="text-center">Puntuación: {{resultado.puntuacionFinal}}</h5>
+            <h5 class="text-center m-3">Puntuación: {{resultado.puntuacionFinal}}</h5>
             </div>
         </div>
     } 

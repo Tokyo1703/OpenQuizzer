@@ -17,16 +17,18 @@ import { SesionCuestionarioCreadorComponent } from './components/sesion-cuestion
 import { ListaResultadosGrupalesComponent } from './components/lista-resultados-grupales/lista-resultados-grupales.component';
 import { ResultadoGrupalCompletoComponent } from './components/resultado-grupal-completo/resultado-grupal-completo.component';
 import { EditarCuestionarioComponent } from './components/editar-cuestionario/editar-cuestionario.component';
+import { BuzonComponent } from './components/buzon/buzon.component';
 
 export const routes: Routes = [
     {
     path: '',
     component: AppComponent,
-    canActivate: [ autenticacionGuard ],     // <- solo deja pasar aquí a NO autenticados
+    canActivate: [ autenticacionGuard ],  
     children: [
-      { path: '', component: ListaCuestionariosComponent },  // landing público
-      { path: 'login', component: LoginComponent },
-      { path: 'registro', component: RegistroComponent },
+      { path: '', component: ListaCuestionariosComponent,canActivate: [ autenticacionGuard ] },  
+      { path: 'login', component: LoginComponent, canActivate: [ autenticacionGuard ]},
+      { path: 'registro', component: RegistroComponent, canActivate: [ autenticacionGuard ] },
+      { path: 'buzon', component: BuzonComponent},
     ]
     },
     {path: 'homeParticipante', component: HomeParticipanteComponent, canActivate: [autenticacionGuardParticipante],
@@ -36,6 +38,7 @@ export const routes: Routes = [
             {path: 'resultadosIndividuales', component: ListaResultadosIndividualesComponent, canActivate: [autenticacionGuardParticipante]},
             {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardParticipante]},
             {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuardParticipante]},
+            {path: 'buzon', component: BuzonComponent},
             ]
     },
     {path: 'homeCreador', component: HomeCreadorComponent, canActivate: [autenticacionGuardCreador],
@@ -51,6 +54,7 @@ export const routes: Routes = [
             {path: 'resultadoIndividualCompleto/:id', component: ResultadoIndividualCompletoComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'resultadoGrupalCompleto/:id', component: ResultadoGrupalCompletoComponent, canActivate: [autenticacionGuardCreador]},
             {path: 'perfil', component: PerfilComponent, canActivate: [autenticacionGuardCreador]},
+            {path: 'buzon', component: BuzonComponent},
         ]
     },
     

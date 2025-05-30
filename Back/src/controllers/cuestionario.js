@@ -21,6 +21,17 @@ export class CuestionarioController {
             res.status(error.code || 500).json({Error: error.message})
         }
     }
+    static async Borrar(req, res) {
+        const inputData = req.params
+        const token = req.cookies.access_token
+
+        try {
+            await CuestionarioModel.Borrar({inputData}, token)
+            res.status(200).json({Mensaje: "Cuestionario borrado correctamente"})
+        } catch (error) {
+            res.status(error.code || 500).json({Error: error.message})
+        }
+    }
 
     static async ListarPublicos(req, res) {
         try {

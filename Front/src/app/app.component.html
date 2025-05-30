@@ -13,13 +13,13 @@
         }
         <div class="d-flex align-items-center">
 
-        @if(Mostrar("/") || Mostrar("/login")){
+        @if(Mostrar("/") || Mostrar("/login") || Mostrar("/buzon")){
             <button class="green-button me-2 d-flex align-items-center px-3 py-2" routerLink="/registro">
                 <i class="bi bi-person-circle fs-6 me-2"></i>
                 Registro
             </button>
         }
-        @if(Mostrar("/")|| Mostrar("/registro")){
+        @if(Mostrar("/")|| Mostrar("/registro") || Mostrar("/buzon")){
             <button class= "green-button d-flex align-items-center px-3 py-1" routerLink="/login">
                 <i class="bi bi-key fs-5 me-2"></i>
                 LogIn
@@ -31,9 +31,13 @@
         </div>
     </div>
 </nav>
-
+@if(Mostrar("/") || Mostrar("/login") || Mostrar("/homeCreador/publicos") || Mostrar("/homeParticipante/publicos") || Mostrar("/registro")){
+    <button class="btn rounded-circle position-fixed bg-green" (click)="buzon()"
+    style="bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 1000;">
+        <i class="bi bi-question-lg fs-2"></i>
+    </button>
+}
 <div class="bg-light-green min-vh-100 w-100" style="margin-top: 65px;">
     <router-outlet></router-outlet>
-    
-    
+
 </div>

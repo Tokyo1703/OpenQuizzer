@@ -124,6 +124,70 @@ export class CuestionarioModel {
         }
     }
 
+    static async Borrar({inputData}, token) {
+        const idCuestionario = inputData.id
+        const infoUsuario = jwt.verify(token, process.env.JWT_SECRET || 'secret')
+        let cuestionario = null
+    
+        try {
+            const [cuestionarioQuery] = await connection.query(
+                `SELECT * FROM cuestionario WHERE idCuestionario = ?`,
+                [idCuestionario]
+            )
+            cuestionario = cuestionarioQuery[0]
+        }
+        catch (e) {
+            const error = new Error("Error de acceso a la base de datos")
+            error.code = 500
+            throw error
+        }
+        if (cuestionario.length === 0) {
+            const error = new Error("Cuestionario no encontrado")
+            error.code = 404
+            throw error
+        }
+        if (cuestionario.nombreUsuario !== infoUsuario.nombreUsuario) {
+            const error = new Error("No tienes permiso para borrar este cuestionario")
+            error.code = 403
+            throw error
+        }
+        try{
+            
+            await connection.query(
+                `DELETE FROM respuesta WHERE idPregunta IN (SELECT idPregunta FROM pregunta WHERE idCuestionario = ?)`,
+                [idCuestionario]
+            )
+            await connection.query(
+                `DELETE FROM preguntaContestada WHERE idPregunta IN (SELECT idPregunta FROM pregunta WHERE idCuestionario = ?)`,
+                [idCuestionario]
+            )
+            await connection.query(
+                `DELETE FROM grupalIndividual where idGrupal IN (SELECT idGrupal FROM resultadoGrupal WHERE idCuestionario = ?)`,
+                [idCuestionario]
+            )
+            await connection.query(
+                `DELETE FROM resultadoGrupal WHERE idCuestionario = ?`,
+                [idCuestionario]
+            )
+            await connection.query(
+                `DELETE FROM resultadoIndividual WHERE idCuestionario = ?`,
+                [idCuestionario]
+            )
+            await connection.query(
+                `DELETE FROM pregunta WHERE idCuestionario = ?`,
+                [idCuestionario]
+            )
+            await connection.query(
+                `DELETE FROM cuestionario WHERE idCuestionario = ?`,
+                [idCuestionario]
+            )
+        } catch (e) {
+            const error = new Error("Error de acceso a la base de datos")
+            error.code = 500
+            throw error
+        }
+    }
+
     static async ListarPublicos() {
         try {
             const [cuestionarios] = await connection.query(

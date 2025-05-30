@@ -8,7 +8,6 @@ import { UsuarioService } from './services/usuario/usuario.service';
 import { Router } from '@angular/router';
 import { MenuPerfilComponent } from "./components/menu-perfil/menu-perfil.component";
 import { FormsModule } from '@angular/forms';
-import { ListaCuestionariosComponent } from "./components/lista-cuestionarios/lista-cuestionarios.component";
 import { SocketService } from './services/socket/socket.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,13 +15,14 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, MenuPerfilComponent, FormsModule, ListaCuestionariosComponent],
+  imports: [RouterOutlet, RouterModule, MenuPerfilComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 
 export class AppComponent implements OnInit {
   codigoSesion: string="";
+  rol="ninguno"
 
   constructor(private router:Router, private usuarioService: UsuarioService, private socketService: SocketService, private toastr: ToastrService) {
     this.usuarioService.getPerfil().subscribe({
@@ -64,5 +64,21 @@ export class AppComponent implements OnInit {
 
   UnirseCuestionario() {
    this.router.navigate(['/sesionCuestionario', this.codigoSesion]);
+  }
+
+  buzon(){
+    this.usuarioService.getPerfil().subscribe({
+      next: (res) => {
+        if (res.perfil.rol == 'Creador') {
+          this.router.navigate(['/homeCreador/buzon']);
+        } else if (res.perfil.rol == 'Participante') {
+          this.router.navigate(['/homeParticipante/buzon']);
+        }
+      },
+      error: () => {
+        this.router.navigate(['buzon']);
+      }
+    });
+    
   }
 }

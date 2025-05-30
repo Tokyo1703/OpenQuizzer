@@ -1,25 +1,32 @@
 <div class="d-flex flex-column align-items-center p-4">
     <h1 class="fw-bold">Mis cuestionarios</h1>
     @for(cuestionario of listaCuestionarios; track cuestionario; let index = $index){
-        <div class="p-4 m-3 rounded bg-green shadow d-flex flex-column align-items-start justify-content-lg-between" 
+        <div class="p-4 m-2 rounded shadow bg-green d-flex flex-column align-items-start justify-content-lg-between" 
         style="max-width: 1200px; width: 90%; min-height: 50px;">
-            <div class="px-3 d-flex flex-wrap justify-content-center align-items-center justify-content-lg-between"
-            style="max-width: 1200px; width: 90%;">
-                
-                <h4>{{cuestionario.nombre}}</h4>
-                <div class="bg-lila d-flex justify-content-center align-items-center p-2 pb-1" style="border-radius: 10px;">
-                    @if(cuestionario.privacidad=="Privado"){
-                        <h5>Privado</h5>
-                    }
-                    @else {
-                        <h5>Público</h5>
-                    }
+            <div class="d-flex align-items-center justify-content-between mb-3 w-100" style="max-width: 1200px;">
+                <div class="d-flex flex-wrap align-items-center">
+                    <h4 class="fw-bold">{{cuestionario.nombre}}</h4>
+                    <div class="bg-lila d-flex justify-content-center align-items-center ms-2 p-2 pb-1" style="border-radius: 10px;">
+                        @if(cuestionario.privacidad=="Privado"){
+                            <h5>Privado</h5>
+                        }
+                        @else {
+                            <h5>Público</h5>
+                        }
+                    </div>
                 </div>
+                
+                <button type="button" class="my-button m-2" (click)="BorrarCuestionario(cuestionario.idCuestionario)"
+                style="background-color: crimson;">
+                    <i class="bi bi-trash-fill fs-5"></i>
+                </button>
             </div>
-            <p class="ps-3"style="max-width: 700px; width: 90%;">{{cuestionario.descripcion}}</p>
-
-            <button class= "lila-button m-2" (click)="IniciarCuestionario(cuestionario.idCuestionario)">Iniciar sesión grupal del cuestionario</button>
+            
+            <p class="w-100">{{cuestionario.descripcion}}</p>
+            <div class="d-flex flex-wrap justify-content-center justify-content-lg-start w-100">
+            <button class= "lila-button my-2" (click)="IniciarCuestionario(cuestionario.idCuestionario)">Iniciar sesión grupal del cuestionario</button>
             <button class= "lila-button m-2" [routerLink]="['/homeCreador/modificarCuestionario',cuestionario.idCuestionario]">Editar Cuestionario</button>
+            </div>
         </div>
     }
 </div>

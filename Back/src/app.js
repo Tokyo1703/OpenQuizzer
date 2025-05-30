@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser'
 import {Server} from 'socket.io'
 import { createServer} from 'node:http'
 import socketHandler from './sockets/socket.js'
+import SugerenciaRouter from './routes/sugerencia.js'
 
 dotenv.config()
 const app = express()
@@ -26,6 +27,7 @@ app.disable('x-powered-by')
 app.use('/usuarios', UsuarioRouter);
 app.use('/cuestionarios', CuestionarioRouter);
 app.use('/resultados', ResultadoRouter);
+app.use('/sugerencias', SugerenciaRouter);
 
 const server = createServer(app);
 const io = new Server(server, {

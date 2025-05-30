@@ -2,14 +2,14 @@ import { Component, OnInit} from '@angular/core';
 import { Cuestionario } from '../../interfaces/cuestionario';
 import { PreguntaRecibidaBackend } from '../../interfaces/pregunta';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CuestionarioService } from '../../services/cuestionario/cuestionario.service';
 import { ToastrService } from 'ngx-toastr';
 import e from 'express';
 
 @Component({
   selector: 'app-editar-cuestionario',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './editar-cuestionario.component.html',
   styleUrl: './editar-cuestionario.component.css'
 })
