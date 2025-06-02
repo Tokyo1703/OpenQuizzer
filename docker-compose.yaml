@@ -28,10 +28,10 @@ services:
       DB_NAME: OpenQuizzerDataBase
     depends_on:
       - database
-    develop:
-      watch:
-        - action: rebuild
-          path: ./Back/.
+    #develop:
+    #  watch:
+    #    - action: rebuild
+    #      path: ./Back/.
   front:
     build:
       context: Front
@@ -41,9 +41,9 @@ services:
     ports:
       - 4200:4200
       
-    develop:
-      watch:
-        - action: rebuild
-          path: ./Front/.
+    #develop:
+    #  watch:
+    #    - action: rebuild
+    #      path: ./Front/.
 volumes:
   mysql_data:
