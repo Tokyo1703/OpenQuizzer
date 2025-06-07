@@ -17,6 +17,7 @@
 ```sh
 #Clonamos el repositorio
     $ git clone git@github.com:Tokyo1703/OpenQuizzer.git
+    $ cd OpenQuizzer
 #Instalamos e iniciamos Docker
     $ sudo apt install docker.io
     $ sudo systemctl start docker
