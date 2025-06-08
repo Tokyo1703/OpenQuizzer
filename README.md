@@ -14,7 +14,7 @@ OpenQuizzer es una aplicación de cuestionarios interactivos con una base de dat
 
 
 
-## Instalación
+## Instalación y uso
 Seguir las instrucciones de instalación de Docker Engine en https://docs.docker.com/engine/install/ubuntu/.
 
 También es posible la instalación de Docker Desktop desde https://www.docker.com/products/docker-desktop/. Será necesario abrir la aplicación de Docker siempre antes de iniciar OpenQuizzer.
@@ -35,6 +35,13 @@ También es posible la instalación de Docker Desktop desde https://www.docker.c
 Para usar la aplicación será necesario abrir cualquier navegador e introducir en la barra de búsqueda http://localhost:4200.
 
 
+Los usuarios de ejemplo son los siguientes:  
+
+**Nombre de usuario**: CarlaCreadora  
+**Contraseña**: c87654321  
+
+**Nombre de usuario**: CarlaParticipante  
+**Contraseña**: c87654321 
 
 ## Licencia
 OpenQuizzer © 2025 by Carla Bravo Maestre is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
