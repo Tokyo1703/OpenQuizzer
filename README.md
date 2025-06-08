@@ -10,26 +10,31 @@
 
 
 ## Descripción
-OpenQuizzer es una aplicación de cuestionarios interactivos con una base de datos MySQL, backend usando Node.js y el frontend con la librería de Angular.
+OpenQuizzer es una aplicación de cuestionarios interactivos con una base de datos MySQL, backend usando Node.js y el frontend con el framework de Angular.
 
 
 
 ## Instalación
+Seguir las instrucciones de instalación de Docker Engine en https://docs.docker.com/engine/install/ubuntu/.
+
+También es posible la instalación de Docker Desktop desde https://www.docker.com/products/docker-desktop/. Será necesario abrir la aplicación de Docker siempre antes de iniciar OpenQuizzer.
+
+##Descargar repositorio
 ```sh
-#Clonamos el repositorio
-    $ git clone git@github.com:Tokyo1703/OpenQuizzer.git
-    $ cd OpenQuizzer
-#Instalamos e iniciamos Docker
-    $ sudo apt install docker.io
-    $ sudo systemctl start docker
-    $ sudo systemctl enable docker
-    $ sudo apt install docker-compose
+#Descargar repositorio
+  $ git clone https://github.com/Tokyo1703/OpenQuizzer.git
+  $ cd OpenQuizzer
+
+#Cargar datos de ejemplo
+  $ sed -i 's|\.\/sql:\/docker-entrypoint-initdb\.d|\.\/sql_example:\/docker-entrypoint-initdb\.d|' docker-compose.yaml
+
+#Lanzamiento app
+  $ sudo docker compose up
+
 ```
-También es posible la instalación de Docker Desktop desde https://www.docker.com/products/docker-desktop/, será necesario abrir la aplicación de docker siempre antes de iniciar OpenQuizzer
-```sh
-#Lanzamos la aplicación con Docker Compose dentro del directorio raiz OpenQuizzer
-    $ sudo docker-compose up
-```
+Para usar la aplicación será necesario abrir cualquier navegador e introducir en la barra de búsqueda http://localhost:4200.
+
+
 
 ## Licencia
 OpenQuizzer © 2025 by Carla Bravo Maestre is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
