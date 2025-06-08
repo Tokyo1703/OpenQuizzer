@@ -108,43 +108,37 @@ create table if not exists sugerencia(
 
 INSERT INTO usuario (nombreUsuario, nombre, apellidos, correo, contrasena, rol) VALUES
 ('CarlaCreadora', 'Carla', 'Bravo Maestre', 'carlac@gmail.com', '$2b$10$cFliIftB.NcjHZsp0QSqJOKe9Atcds9PNRY1cvbhHxbPQieRmQvE.', 'Creador'),
-('CarlaParticipante', 'Carlos', 'Bravo Maestre', 'carlap@gmail.com', '$2b$10$Hu6LGnPKx4mfhumVE35G9OVf82qvEbHmVft4K2nMJIBfotmDFoW8m', 'Participante');
+('CarlaParticipante', 'Carla', 'Bravo Maestre', 'carlap@gmail.com', '$2b$10$Hu6LGnPKx4mfhumVE35G9OVf82qvEbHmVft4K2nMJIBfotmDFoW8m', 'Participante');
 
 INSERT INTO cuestionario (nombreUsuario, nombre, descripcion, privacidad) VALUES
-('CarlaCreadora', 'Informática - Tema 1', 'Cuestionario del primer tema de la asignatura de informática de 2º de Bachillerato, del instituto IES Maimónides, para la clase A.', 'Publico'),
-('CarlaCreadora', 'Biología 1º ESO - Tema 1', 'Cuestionario del tema 1 de la asignatura de Biología para el curso 1º ESO, clase A, del instituto IES Maimónides.', 'Publico');
-
+('CarlaCreadora', 'Informatica - Tema 1', 'Cuestionario del primer tema de la asignatura de informatica de 2º de Bachillerato, del instituto IES Maimonides, para la clase A.', 'Publico'),
+('CarlaCreadora', 'Biologia 1º ESO - Tema 1', 'Cuestionario del tema 1 de la asignatura de Biologia para el curso 1º ESO, clase A, del instituto IES Maimonides.', 'Publico');
 
 INSERT INTO pregunta (idCuestionario, tipo, tiempo, contenido, puntuacion, puntosSegundo) VALUES
-(1, 'OpcionMultiple', 20, '¿Para que sirve la memoria RAM?', 100, 2),
-(1, 'OpcionUnica', 20, '¿Qué es una red LAN?', 100, 2),
-(1, 'VerdaderoFalso', 20, '¿La dirección IP es el número de serie del disco duro?', 100, 2),
-(1, 'OpcionMultiple', 15, '¿Cuál/es de estos componentes pertenecen al hardware de una computadora?', 120, 2),
-(2, 'VerdaderoFalso', 20, 'Los seres vivos están formados por células', 100, 1),
-(2, 'RespuestaAbierta', 22, '¿En qué parte del cuerpo se encuentra el cerebro?', 100, 1),
-(2, 'OpcionMultiple', 22, '¿Cuáles de los siguientes son seres vivos?', 100, 1),
-(2, 'OpcionUnica', 20, '¿Qué necesitan las plantas para hacer la fotosíntesis?', 120, 2);
-
-
+(1, 'OpcionMultiple', 20, 'Para que sirve la memoria RAM?', 100, 2),
+(1, 'OpcionUnica', 20, 'Que es una red LAN?', 100, 2),
+(1, 'VerdaderoFalso', 20, 'La direccion IP es el numero de serie del disco duro?', 100, 2),
+(1, 'OpcionMultiple', 15, 'Cual/es de estos componentes pertenecen al hardware de una computadora?', 120, 2),
+(2, 'VerdaderoFalso', 20, 'Los seres vivos estan formados por celulas', 100, 1),
+(2, 'RespuestaAbierta', 22, 'En que parte del cuerpo se encuentra el cerebro?', 100, 1),
+(2, 'OpcionMultiple', 22, 'Cuales de los siguientes son seres vivos?', 100, 1),
+(2, 'OpcionUnica', 20, 'Que necesitan las plantas para hacer la fotosintesis?', 120, 2);
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (1, 'Guardar fotos permanentemente', 'Falsa'),
-(1, 'Almacenar temporalmente datos de procesos en ejecución', 'Correcta'),
+(1, 'Almacenar temporalmente datos de procesos en ejecucion', 'Correcta'),
 (1, 'Reproducir sonido', 'Falsa'),
 (1, 'Navegar por Internet', 'Falsa');
-
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (2, 'Una red global como Internet', 'Falsa'),
 (2, 'Una red local de dispositivos interconectados', 'Correcta'),
 (2, 'Un sistema de respaldo de datos', 'Falsa'),
-(2, 'Un antivirus de código abierto', 'Falsa');
-
+(2, 'Un antivirus de codigo abierto', 'Falsa');
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
-(3, 'Sí', 'Falsa'),
+(3, 'Si', 'Falsa'),
 (3, 'No', 'Correcta');
-
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (4, 'Disco duro', 'Correcta'),
@@ -154,25 +148,23 @@ INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (4, 'Antivirus', 'Falsa'),
 (4, 'CPU', 'Correcta');
 
-
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (5, 'Verdadero', 'Correcta'),
 (5, 'Falso', 'Falsa');
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (6, 'Cabeza', 'Correcta'),
-(6, 'Cráneo', 'Correcta'),
+(6, 'Craneo', 'Correcta'),
 (6, 'Craneo', 'Correcta');
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
-(7, 'Árbol', 'Correcta'),
+(7, 'Arbol', 'Correcta'),
 (7, 'Roca', 'Falsa'),
 (7, 'Perro', 'Correcta'),
 (7, 'Hongo', 'Correcta');
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
-(8, 'Agua, oxígeno y sombra', 'Falsa'),
-(8, 'Luz solar, agua y dióxido de carbono', 'Correcta'),
+(8, 'Agua, oxigeno y sombra', 'Falsa'),
+(8, 'Luz solar, agua y dioxido de carbono', 'Correcta'),
 (8, 'Tierra, sal y aire', 'Falsa'),
 (8, 'Fuego, aire y agua', 'Falsa');
-

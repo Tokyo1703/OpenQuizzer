@@ -10,6 +10,7 @@
 
 
 ## Descripción
+OpenQuizzer es una aplicación de cuestionarios interactivos con una base de datos MySQL, backend usando Node.js y el frontend con la librería de Angular.
 
 
 
