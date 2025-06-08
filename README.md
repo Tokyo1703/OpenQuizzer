@@ -25,7 +25,7 @@ También es posible la instalación de Docker Desktop desde https://www.docker.c
   $ git clone https://github.com/Tokyo1703/OpenQuizzer.git
   $ cd OpenQuizzer
 
-#Cargar datos de ejemplo
+#Introduzca la siguiente linea en la terminal si desea cargar datos de ejemplo
   $ sed -i 's|\.\/sql:\/docker-entrypoint-initdb\.d|\.\/sql_example:\/docker-entrypoint-initdb\.d|' docker-compose.yaml
 
 #Lanzamiento app
