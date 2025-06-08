@@ -107,8 +107,8 @@ create table if not exists sugerencia(
 
 
 INSERT INTO usuario (nombreUsuario, nombre, apellidos, correo, contrasena, rol) VALUES
-('CarlaCreadora', 'Carla', 'Bravo Maestre', 'carlabm1703@gmail.com', '$2b$10$cFliIftB.NcjHZsp0QSqJOKe9Atcds9PNRY1cvbhHxbPQieRmQvE.', 'Creador'),
-('CarlaParticipante', 'Carlos', 'Bravo Maestre', 'carlabm1703@gmail.com', '$2b$10$Hu6LGnPKx4mfhumVE35G9OVf82qvEbHmVft4K2nMJIBfotmDFoW8m', 'Participante');
+('CarlaCreadora', 'Carla', 'Bravo Maestre', 'carlac@gmail.com', '$2b$10$cFliIftB.NcjHZsp0QSqJOKe9Atcds9PNRY1cvbhHxbPQieRmQvE.', 'Creador'),
+('CarlaParticipante', 'Carlos', 'Bravo Maestre', 'carlap@gmail.com', '$2b$10$Hu6LGnPKx4mfhumVE35G9OVf82qvEbHmVft4K2nMJIBfotmDFoW8m', 'Participante');
 
 INSERT INTO cuestionario (nombreUsuario, nombre, descripcion, privacidad) VALUES
 ('CarlaCreadora', 'Informática - Tema 1', 'Cuestionario del primer tema de la asignatura de informática de 2º de Bachillerato, del instituto IES Maimónides, para la clase A.', 'Publico'),
