@@ -111,8 +111,8 @@ INSERT INTO usuario (nombreUsuario, nombre, apellidos, correo, contrasena, rol) 
 ('CarlaParticipante', 'Carla', 'Bravo Maestre', 'carlap@gmail.com', '$2b$10$Hu6LGnPKx4mfhumVE35G9OVf82qvEbHmVft4K2nMJIBfotmDFoW8m', 'Participante');
 
 INSERT INTO cuestionario (nombreUsuario, nombre, descripcion, privacidad) VALUES
-('CarlaCreadora', 'Informatica - Tema 1', 'Cuestionario del primer tema de la asignatura de informatica de 2º de Bachillerato, del instituto IES Maimonides, para la clase A.', 'Publico'),
-('CarlaCreadora', 'Biologia 1º ESO - Tema 1', 'Cuestionario del tema 1 de la asignatura de Biologia para el curso 1º ESO, clase A, del instituto IES Maimonides.', 'Publico');
+('CarlaCreadora', 'Informatica - Tema 1', 'Cuestionario del primer tema de la asignatura de informatica de 2 de Bachillerato, del instituto IES Maimonides, para la clase A.', 'Publico'),
+('CarlaCreadora', 'Biologia 1 ESO - Tema 1', 'Cuestionario del tema 1 de la asignatura de Biologia para el curso 1 ESO, clase A, del instituto IES Maimonides.', 'Publico');
 
 INSERT INTO pregunta (idCuestionario, tipo, tiempo, contenido, puntuacion, puntosSegundo) VALUES
 (1, 'OpcionMultiple', 20, 'Para que sirve la memoria RAM?', 100, 2),
@@ -154,7 +154,6 @@ INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
 (6, 'Cabeza', 'Correcta'),
-(6, 'Craneo', 'Correcta'),
 (6, 'Craneo', 'Correcta');
 
 INSERT INTO respuesta (idPregunta, contenido, correcta) VALUES
